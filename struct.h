@@ -2,7 +2,7 @@
 #define STRUCT_H
 
 #define MAX_TARGET 18
-#define     MAX_ROBOT 4
+#define MAX_ROBOT 4
 
 enum State
 {
