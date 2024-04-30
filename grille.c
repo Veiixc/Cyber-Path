@@ -13,46 +13,7 @@ int generateRandomNumber(int min, int max)
     return (rand() % (max - min + 1)) + min;
 }
 
-void createGrid()
-{
-    int rows = generateRandomNumber(15, 20);
-    int cols = generateRandomNumber(15, 20);
-    CASE **grid = (CASE **)malloc(rows * sizeof(CASE *));
-    if (grid == NULL)
-    {
-        printf("erreur d'allocation dynamique");
-        exit(EXIT_FAILURE);
-    }
-    for (int i = 0; i < rows; i++)
-    {
-        grid[i] = (CASE *)malloc(cols * sizeof(CASE));
-        if (grid[i] == NULL)
-        {
-            exit(EXIT_FAILURE);
-        }
-    }
 
-    for (int row = 0; row < rows; row++)
-    {
-        for (int col = 0; col < cols; col++)
-        {
-
-            grid[row][col].state = IS_EMPTY;
-            for (int i = 0; i < 4; i++)
-            {
-                grid[row][col].wall[i] = WALL_ABSENT;
-            }
-        }
-    }
-
-    // toutes les differnets fonctions
-
-    for (int i = 0; i < rows; i++)
-    {
-        free(grid[i]);
-    }
-    free(grid);
-}
 
 void addTarget(CASE **grid, int cols, int rows)
 {
@@ -62,18 +23,18 @@ void addTarget(CASE **grid, int cols, int rows)
         int targetRow = generateRandomNumber(1, rows - 2);
         int targetCol = generateRandomNumber(1, cols - 2);
 
-        //   if(grid[targetRow][targetCol].state == IS_EMPTY
-        //       && grid[targetRow-1][targetCol].state == IS_EMPTY
-        //       &&grid[targetRow-1][targetCol-1].state == IS_EMPTY
-        //       &&grid[targetRow-1][targetCol+1].state == IS_EMPTY
-        //       &&grid[targetRow+1][targetCol-1].state == IS_EMPTY
-        //       &&grid[targetRow+1][targetCol+1].state == IS_EMPTY
-        //       &&grid[targetRow+1][targetCol+1].state == IS_EMPTY
-        //       &&grid[targetRow-1][targetCol+1].state == IS_EMPTY
-        //       &&grid[targetRow][targetCol+1].state == IS_EMPTY){
-        //          placedTargets++;
-        //          grid[targetRow][targetCol].state = IS_TARGET;
-        //       }
+           if(grid[targetRow][targetCol].state == IS_EMPTY
+               && grid[targetRow-1][targetCol].state == IS_EMPTY
+               &&grid[targetRow-1][targetCol-1].state == IS_EMPTY
+               &&grid[targetRow-1][targetCol+1].state == IS_EMPTY
+               &&grid[targetRow+1][targetCol-1].state == IS_EMPTY
+               &&grid[targetRow+1][targetCol+1].state == IS_EMPTY
+               &&grid[targetRow+1][targetCol+1].state == IS_EMPTY
+               &&grid[targetRow-1][targetCol+1].state == IS_EMPTY
+               &&grid[targetRow][targetCol+1].state == IS_EMPTY){
+                  placedTargets++;
+                  grid[targetRow][targetCol].state = IS_TARGET;
+               }
     }
 }
 //     switch(k)
@@ -89,7 +50,7 @@ void addTarget(CASE **grid, int cols, int rows)
 //             printf("relancez l'execution\n");
 //     }
 // }
-void addWAall(CASE **grid, int cols, int rows)
+void addWall(CASE **grid, int cols, int rows)
 {
     for (int row = 1; row < rows - 1; row++)
     {
@@ -124,10 +85,50 @@ void addWAall(CASE **grid, int cols, int rows)
         }
     }
 }
+void createGrid()
+{
+    int rows = generateRandomNumber(15, 20);
+    int cols = generateRandomNumber(15, 20);
+    CASE **grid = (CASE **)malloc(rows * sizeof(CASE *));
+    if (grid == NULL)
+    {
+        printf("erreur d'allocation dynamique");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < rows; i++)
+    {
+        grid[i] = (CASE *)malloc(cols * sizeof(CASE));
+        if (grid[i] == NULL)
+        {
+            exit(EXIT_FAILURE);
+        }
+    }
 
+    for (int row = 0; row < rows; row++)
+    {
+        for (int col = 0; col < cols; col++)
+        {
+
+            grid[row][col].state = IS_EMPTY;
+            for (int i = 0; i < 4; i++)
+            {
+                grid[row][col].wall[i] = WALL_ABSENT;
+            }
+        }
+    }
+
+    addTarget(grid,cols,rows);
+    addWall(grid,cols,rows);
+    
+    for(int i = 0; i < rows; i++)
+    {
+        free(grid[i]);
+    }
+    free(grid);
+}
 int main()
 {
-    creationGrille();
+    createGrid();
 
     return 0;
 }
