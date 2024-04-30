@@ -35,9 +35,11 @@ typedef struct CASE
 typedef struct USER
 {
     int life;
-    char *name;
+    char name[24];
     int score;
     int nb_movement;
+    int nb_estimated_movement;
+    int num;
     // ...
 }USER;
 
