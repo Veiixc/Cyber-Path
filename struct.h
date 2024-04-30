@@ -32,7 +32,7 @@ typedef struct CASE
     // ...
 }CASE;
 
-typedef struct USER
+typedef struct Players
 {
     int life;
     char name[24];
@@ -41,6 +41,6 @@ typedef struct USER
     int nb_estimated_movement;
     int num;
     // ...
-}USER;
+}Players;
 
 #endif 
