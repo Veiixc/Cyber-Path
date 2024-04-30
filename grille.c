@@ -1,58 +1,133 @@
-#include "./struct.h" 
+#include "./struct.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h> 
- 
+#include <time.h>
 
 #define MIN_SIZE 15
 #define MAX_SIZE 20
 
+int generateRandomNumber(int min, int max)
+{
+    return (rand() % (max - min + 1)) + min;
+}
 
-void createGrille(){
-    int rows = MIN_SIZE +rand() % 16;
-    int cols = MIN_SIZE +rand() % 16;
-    CASE** grille = (CASE**)malloc(rows*sizeof(CASE*));
-    if(grille==NULL){
+void createGrid()
+{
+    int rows = generateRandomNumber(15, 20);
+    int cols = generateRandomNumber(15, 20);
+    CASE **grid = (CASE **)malloc(rows * sizeof(CASE *));
+    if (grid == NULL)
+    {
+        printf("erreur d'allocation dynamique");
         exit(EXIT_FAILURE);
     }
-    for(int i=0;  i<rows;i++ ){
-        grille[i]=(CASE*)malloc(cols*sizeof(CASE));
-        if(grille[i]==NULL){
+    for (int i = 0; i < rows; i++)
+    {
+        grid[i] = (CASE *)malloc(cols * sizeof(CASE));
+        if (grid[i] == NULL)
+        {
             exit(EXIT_FAILURE);
         }
     }
 
-        //toutes les differnets fonctions 
+    for (int row = 0; row < rows; row++)
+    {
+        for (int col = 0; col < cols; col++)
+        {
 
-
-
-
-    for(int i=0;  i<rows ;i++ ){
-        free(grille[i]);
+            grid[row][col].state = IS_EMPTY;
+            for (int i = 0; i < 4; i++)
+            {
+                grid[row][col].wall[i] = WALL_ABSENT;
+            }
+        }
     }
-    free(grille);
+
+    // toutes les differnets fonctions
+
+    for (int i = 0; i < rows; i++)
+    {
+        free(grid[i]);
+    }
+    free(grid);
 }
 
-int caseFreeOrNot(){
-    
+void addTarget(CASE **grid, int cols, int rows)
+{
+    int placedTargets = 0;
+    while (placedTargets < 18)
+    {
+        int targetRow = generateRandomNumber(1, rows - 2);
+        int targetCol = generateRandomNumber(1, cols - 2);
+
+        //   if(grid[targetRow][targetCol].state == IS_EMPTY
+        //       && grid[targetRow-1][targetCol].state == IS_EMPTY
+        //       &&grid[targetRow-1][targetCol-1].state == IS_EMPTY
+        //       &&grid[targetRow-1][targetCol+1].state == IS_EMPTY
+        //       &&grid[targetRow+1][targetCol-1].state == IS_EMPTY
+        //       &&grid[targetRow+1][targetCol+1].state == IS_EMPTY
+        //       &&grid[targetRow+1][targetCol+1].state == IS_EMPTY
+        //       &&grid[targetRow-1][targetCol+1].state == IS_EMPTY
+        //       &&grid[targetRow][targetCol+1].state == IS_EMPTY){
+        //          placedTargets++;
+        //          grid[targetRow][targetCol].state = IS_TARGET;
+        //       }
+    }
+}
+//     switch(k)
+//     {
+//         case 0 :
+//             printf("%d\n",i/j);
+//             break;
+//         case 1 :
+//             printf("%f\n",(float)i/j);
+//             break;
+//        default :
+//             printf("il faut entrer 0 ou 1\n");
+//             printf("relancez l'execution\n");
+//     }
+// }
+void addWAall(CASE **grid, int cols, int rows)
+{
+    for (int row = 1; row < rows - 1; row++)
+    {
+        for (int col = 1; col < cols - 1; col++)
+        {
+            if (grid[row][col].state == IS_TARGET)
+            {
+                int direction = generateRandomNumber(0, 3);
+                switch (direction)
+                {
+                case 0: // mur au sud et à l'ouest
+                    grid[row][col].wall[SOUTH] = WALL_PRESENT;
+                    grid[row][col].wall[WEST] = WALL_PRESENT;
+                    break;
+
+                case 1: // mur au sud et à l'est
+                    grid[row][col].wall[SOUTH] = WALL_PRESENT;
+                    grid[row][col].wall[EST] = WALL_PRESENT;
+                    break;
+
+                case 2: // mur au nord et à l'ouest
+                    grid[row][col].wall[NORTH] = WALL_PRESENT;
+                    grid[row][col].wall[WEST] = WALL_PRESENT;
+                    break;
+
+                case 3: // mur au nord et à l'est
+                    grid[row][col].wall[NORTH] = WALL_PRESENT;
+                    grid[row][col].wall[EST] = WALL_PRESENT;
+                    break;
+                }
+            }
+        }
+    }
 }
 
-
-void putcible(){
-    //verifier si la case est libre
-    //verifier les case autours
-    //placer la cible 
-
-}
-
-
-
-
-
-int main(){
+int main()
+{
     creationGrille();
-   
-    return 0;   
-}   
+
+    return 0;
+}
