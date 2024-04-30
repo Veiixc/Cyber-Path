@@ -35,8 +35,16 @@ void createGrille(){
     free(grille);
 }
 
+int caseFreeOrNot(){
+    
+}
+
+
 void putcible(){
-        
+    //verifier si la case est libre
+    //verifier les case autours
+    //placer la cible 
+
 }
 
 
