@@ -13,7 +13,7 @@ enum State
 enum WALL
 {
     NORTH,
-    EST,
+    EST,    
     SOUTH,
     WEST
 };
@@ -33,7 +33,7 @@ typedef struct CASE
 }CASE;
 
 typedef struct Players
-{
+{   
     int life;
     char name[24];
     int score;

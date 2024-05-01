@@ -98,6 +98,17 @@ void addTargetAndWall(CASE **grid, int cols, int rows)
 //     }
 // }     
 
+void addRobots(CASE **grid, int rows,int cols){
+    int placedRobots = 0;
+    while(placedRobots<4){
+        int robotRow=generateRandomNumber(0,rows-1);
+        int robotCol=generateRandomNumber(0,cols-1);
+        if(grid[robotRow][robotCol].state==IS_EMPTY){
+            grid[robotRow][robotCol].state==IS_ROBOT;
+            placedRobots++;
+        }
+    }
+}
 void createGrid()
 {
     int rows = generateRandomNumber(15, 20);
@@ -129,10 +140,10 @@ void createGrid()
             }
         }
     }
-    
+
     addBorderWall(grid,rows,cols);
     addTargetAndWall(grid,cols,rows);
-
+    addRobots(grid,rows,cols);
     
     for(int i = 0; i < rows; i++)
     {
@@ -142,6 +153,7 @@ void createGrid()
 }
 int main()
 {
+    
     createGrid();
     return 0;
 }
