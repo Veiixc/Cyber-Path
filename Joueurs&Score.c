@@ -54,8 +54,8 @@ void PrintWinner(Players *players){
     printf("Le gagnant de la partie est %s\n Son score est de %d points \nFélicitation a tout les joueurs !",players[winner].name, players[winner].score);
 }
 
-void Minuteur(){
-    difficulty=ChoiceofDifficulty();
+void Minuteur(){ 
+    int difficulty=ChoiceofDifficulty();
     if(difficulty==1){
     int remaining_time = 10; // Temps restant en secondes
 
