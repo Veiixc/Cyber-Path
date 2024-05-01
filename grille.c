@@ -13,9 +13,35 @@ int generateRandomNumber(int min, int max)
     return (rand() % (max - min + 1)) + min;
 }
 
+void addWall(CASE caseGrid)
+{
+           int direction = generateRandomNumber(0, 3);
+                switch (direction)
+                {
+                case 0: // mur au sud et à l'ouest
+                    caseGrid.wall[SOUTH] = WALL_PRESENT;
+                    caseGrid.wall[WEST] = WALL_PRESENT;
+                    break;
+
+                case 1: // mur au sud et à l'est
+                    caseGrid.wall[SOUTH] = WALL_PRESENT;
+                    caseGrid.wall[EST] = WALL_PRESENT;
+                    break;
+
+                case 2: // mur au nord et à l'ouest
+                    caseGrid.wall[NORTH] = WALL_PRESENT;
+                    caseGrid.wall[WEST] = WALL_PRESENT;
+                    break;
+
+                case 3: // mur au nord et à l'est
+                    caseGrid.wall[NORTH] = WALL_PRESENT;
+                    caseGrid.wall[EST] = WALL_PRESENT;
+                    break;
+                }
+            }
 
 
-void addTarget(CASE **grid, int cols, int rows)
+void addTargetAndWall(CASE **grid, int cols, int rows)
 {
     int placedTargets = 0;
     while (placedTargets < 18)
@@ -34,6 +60,7 @@ void addTarget(CASE **grid, int cols, int rows)
                &&grid[targetRow][targetCol+1].state == IS_EMPTY){
                   placedTargets++;
                   grid[targetRow][targetCol].state = IS_TARGET;
+                  addWall(grid[targetRow][targetCol]);
                }
     }
 }
@@ -49,42 +76,8 @@ void addTarget(CASE **grid, int cols, int rows)
 //             printf("il faut entrer 0 ou 1\n");
 //             printf("relancez l'execution\n");
 //     }
-// }
-void addWall(CASE **grid, int cols, int rows)
-{
-    for (int row = 1; row < rows - 1; row++)
-    {
-        for (int col = 1; col < cols - 1; col++)
-        {
-            if (grid[row][col].state == IS_TARGET)
-            {
-                int direction = generateRandomNumber(0, 3);
-                switch (direction)
-                {
-                case 0: // mur au sud et à l'ouest
-                    grid[row][col].wall[SOUTH] = WALL_PRESENT;
-                    grid[row][col].wall[WEST] = WALL_PRESENT;
-                    break;
+// }     
 
-                case 1: // mur au sud et à l'est
-                    grid[row][col].wall[SOUTH] = WALL_PRESENT;
-                    grid[row][col].wall[EST] = WALL_PRESENT;
-                    break;
-
-                case 2: // mur au nord et à l'ouest
-                    grid[row][col].wall[NORTH] = WALL_PRESENT;
-                    grid[row][col].wall[WEST] = WALL_PRESENT;
-                    break;
-
-                case 3: // mur au nord et à l'est
-                    grid[row][col].wall[NORTH] = WALL_PRESENT;
-                    grid[row][col].wall[EST] = WALL_PRESENT;
-                    break;
-                }
-            }
-        }
-    }
-}
 void createGrid()
 {
     int rows = generateRandomNumber(15, 20);
@@ -117,8 +110,8 @@ void createGrid()
         }
     }
 
-    addTarget(grid,cols,rows);
-    addWall(grid,cols,rows);
+    addTargetAndWall(grid,cols,rows);
+
     
     for(int i = 0; i < rows; i++)
     {
@@ -129,6 +122,5 @@ void createGrid()
 int main()
 {
     createGrid();
-
     return 0;
 }
