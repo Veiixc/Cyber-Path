@@ -1,4 +1,6 @@
 #include "./struct.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int Better_Scanf(char *message) {
     int ret_var = 0;
@@ -51,9 +53,6 @@ void PrintWinner(Players *players){
     }
     printf("Le gagnant de la partie est %s\n Son score est de %d points \nFélicitation a tout les joueurs !",players[winner].name, players[winner].score);
 }
-
-#include <stdio.h>
-#include <unistd.h>
 
 void Minuteur(){
     difficulty=ChoiceofDifficulty();
