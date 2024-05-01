@@ -13,6 +13,26 @@ int generateRandomNumber(int min, int max)
     return (rand() % (max - min + 1)) + min;
 }
 
+void addBorderWall(CASE **grid, int rows, int cols){
+    for(int i =0; i<2;i++){
+        int col = generateRandomNumber(0,cols-2);
+        grid[0][col].wall[EST] = WALL_PRESENT;
+    }
+    for(int i =0; i<2;i++){
+        int col = generateRandomNumber(0,cols-2);
+        grid[rows-1][col].wall[EST] = WALL_PRESENT;
+    }
+    for(int i =0; i<2;i++){
+        int col = generateRandomNumber(0,rows-2);
+        grid[rows][0].wall[SOUTH] = WALL_PRESENT;
+    }
+    for(int i =0; i<2;i++){
+        int col = generateRandomNumber(0,rows-2);
+        grid[rows][cols-1].wall[SOUTH] = WALL_PRESENT;
+    }
+    
+}
+
 void addWall(CASE caseGrid)
 {
            int direction = generateRandomNumber(0, 3);
@@ -109,7 +129,8 @@ void createGrid()
             }
         }
     }
-
+    
+    addBorderWall(grid,rows,cols);
     addTargetAndWall(grid,cols,rows);
 
     
