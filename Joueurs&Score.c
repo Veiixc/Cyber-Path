@@ -18,21 +18,22 @@ void CreatePlayers(Players *players) {
     for (int i = 0; i < players->num; i++) {//on fait une boucle pour demandez les noms de tout les joueurs
         printf("Veuillez saisir Le nom du joueur %d : ", i + 1);
         scanf("%s", players[i].name); 
+        players[i].score=0;//initialisation de tout les scores a 0
     }
 }
 
-void Score(Players *players, int score, int nb_deplacement_est, int nb_reel ){
-    for(int i=0;i<players->num;i++){//on fait une boucle pour les n nombre de joueurs
-        if(nb_deplacement_est==nb_reel){
-            players[i].score +=2;//si le joueur a parfaitement estimé il gagne deux points
+void CalculScore(Players *player, int score ){
+    for(int i=0;i<player->num;i++){//on fait une boucle pour les n nombre de joueurs
+        if(player->nb_estimated_movement==player->nb_movement){
+            player[i].score +=2;//si le joueur a parfaitement estimé il gagne deux points
         }
-        else if(nb_deplacement_est < nb_reel){//si le joueur a mal estimÃ© et que il a fait moins que son estimation on lui retire un points 
-            players[i].score-=1;
+        else if(player->nb_estimated_movement < player->nb_movement){//si le joueur a mal estimé et que il a fait moins que son estimation on lui retire un points 
+            player[i].score-=1;
         }
         else {
-            for(int j=0;j<players->num;j++){
+            for(int j=0;j<player->num;j++){
                 if(j!=i){
-                    players[j].score+=1;
+                    player[j].score+=1;
                 }
             }
         }
@@ -49,4 +50,13 @@ void PrintWinner(Players *players){
         }
     }
     printf("Le gagnant de la partie est %s\n Son score est de %d points \nFélicitation a tout les joueurs !",players[winner].name, players[winner].score);
+}
+
+
+
+
+int main() {
+    Players players;
+    CreatePlayers(&players);
+return 0;
 }
