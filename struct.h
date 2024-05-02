@@ -34,7 +34,7 @@ typedef struct CASE
 
 typedef struct Players
 {   
-    int life;
+    int robot;
     char name[24];
     int score;
     int nb_movement;

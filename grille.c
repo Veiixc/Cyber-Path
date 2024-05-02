@@ -25,6 +25,7 @@ void addBorderWall(CASE **grid, int rows, int cols){
     for(int i =0; i<2;i++){
         int col = generateRandomNumber(0,rows-2);
         grid[rows][0].wall[SOUTH] = WALL_PRESENT;
+
     }
     for(int i =0; i<2;i++){
         int col = generateRandomNumber(0,rows-2);
@@ -64,6 +65,7 @@ void addWall(CASE caseGrid)
 void addTargetAndWall(CASE **grid, int cols, int rows)
 {
     int placedTargets = 0;
+    int compteurTargets=1;
     while (placedTargets < 18)
     {
         int targetRow = generateRandomNumber(1, rows - 2);
@@ -80,6 +82,8 @@ void addTargetAndWall(CASE **grid, int cols, int rows)
                &&grid[targetRow][targetCol+1].state == IS_EMPTY){
                   placedTargets++;
                   grid[targetRow][targetCol].state = IS_TARGET;
+                  grid[targetRow][targetCol].target_number= compteurTargets;
+                  compteurTargets++;
                   addWall(grid[targetRow][targetCol]);
                }
     }
@@ -100,11 +104,14 @@ void addTargetAndWall(CASE **grid, int cols, int rows)
 
 void addRobots(CASE **grid, int rows,int cols){
     int placedRobots = 0;
+    int compteurRobots=1;
     while(placedRobots<4){
         int robotRow=generateRandomNumber(0,rows-1);
         int robotCol=generateRandomNumber(0,cols-1);
         if(grid[robotRow][robotCol].state==IS_EMPTY){
             grid[robotRow][robotCol].state==IS_ROBOT;
+            grid[robotRow][robotCol].robot_number==compteurRobots;
+            compteurRobots++;
             placedRobots++;
         }
     }
@@ -151,9 +158,10 @@ void createGrid()
     }
     free(grid);
 }
+
 int main()
 {
-    
+   
     createGrid();
     return 0;
 }
