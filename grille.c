@@ -108,19 +108,23 @@ void addTargetAndWall(CASE **grid, int cols, int rows)
 // }
 
 void addRobots(CASE **grid, int rows, int cols)
-{
-    int placedRobots = 0;
+{   int placedRobots=0;
     int compteurRobots = 1;
-    while (placedRobots < 4)
+    Players* player_robot=NULL;
+    player_robot=malloc(sizeof(Players)*4);
+    if (player_robot==NULL){
+            printf("Erreur d'allocation");
+            exit(1);
+        }
+    for(int i=0;i<4;i++)
     {
-        Players player_robot;
         int robotRow = generateRandomNumber(0, rows - 1);
         int robotCol = generateRandomNumber(0, cols - 1);
         if (grid[robotRow][robotCol].state == IS_EMPTY)
         {
             grid[robotRow][robotCol].state = IS_ROBOT;
-            player_robot.robot_row = robotRow;
-            player_robot.robot_col = robotCol;
+            player_robot[i].robot_row = robotRow;
+            player_robot[i].robot_col = robotCol;
             grid[robotRow][robotCol].robot_number = compteurRobots;
             compteurRobots++;
             placedRobots++;

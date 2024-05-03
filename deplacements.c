@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "./struct.h"
 
-void deplacementsJoueur(CASE** grid,int* robotRow,int* robotCol){ //La fonction prend en paramètres les coordonnées du joueur et la grille
+void PlayerMovement(CASE** grid,int* robotRow,int* robotCol){ //La fonction prend en paramètres les coordonnées du joueur et la grille
     int direction;
     printf("Wich direction:\n'z'=UP\n'q'=DOWN\n's'=LEFT\n'd'=RIGHT\n");
     scanf("%d",&direction);
