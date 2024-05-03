@@ -126,7 +126,6 @@ void addRobots(CASE **grid, int rows, int cols)
             player_robot[i].robot_col = robotCol;
             grid[robotRow][robotCol].robot_number = compteurRobots;
             compteurRobots++;
-            placedRobots++;
         }
     }
 }
