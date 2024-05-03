@@ -113,11 +113,14 @@ void addRobots(CASE **grid, int rows, int cols)
     int compteurRobots = 1;
     while (placedRobots < 4)
     {
+        int Players player;
         int robotRow = generateRandomNumber(0, rows - 1);
         int robotCol = generateRandomNumber(0, cols - 1);
         if (grid[robotRow][robotCol].state == IS_EMPTY)
         {
             grid[robotRow][robotCol].state = IS_ROBOT;
+            Players.robot_row = robotRow;
+            Players.robot_col = robotCol;
             grid[robotRow][robotCol].robot_number = compteurRobots;
             compteurRobots++;
             placedRobots++;
@@ -178,7 +181,6 @@ void createGrid()
             }
         }
     }
-    printf("caca");
     addBorderWall(grid, rows, cols);
     addTargetAndWall(grid, cols, rows);
     addRobots(grid, rows, cols);
