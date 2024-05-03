@@ -108,8 +108,7 @@ void addTargetAndWall(CASE **grid, int cols, int rows)
 // }
 
 void addRobots(CASE **grid, int rows, int cols)
-{   int placedRobots=0;
-    int compteurRobots = 1;
+{   int compteurRobots = 1;
     Players* player_robot=NULL;
     player_robot=malloc(sizeof(Players)*4);
     if (player_robot==NULL){
