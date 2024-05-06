@@ -4,10 +4,17 @@
 void PlayerMovement(CASE **grid, Players robot)
 { // La fonction prend en paramètres la grille et la structure du joueur pour récupérer ses coordonnées
     int direction;
-    printf("Wich direction:\n'z'=UP\n'q'=DOWN\n's'=LEFT\n'd'=RIGHT\n");
+    printf("Wich direction:\n1=UP\n2=DOWN\n3=LEFT\n4=RIGHT\n");
     scanf("%d", &direction);
-    // Vérification de la direction saisie
     grid[robot.robot_row][robot.robot_col].state = IS_EMPTY; // Vide l'ancienne position
+    while (direction>4 || direction<0)
+    {
+        printf("Invalid direction\n");
+        printf("Wich direction:\n'z'=UP\n'q'=DOWN\n's'=LEFT\n'd'=RIGHT\n");
+        scanf("%d", &direction);
+        
+     }
+    // Vérification de la direction saisie
     switch (direction)
     {
     case 'z': // aller en haut
@@ -38,7 +45,5 @@ void PlayerMovement(CASE **grid, Players robot)
             grid[robot.robot_row][robot.robot_col].state = IS_ROBOT;
         }
         break;
-    default:
-        printf("Invalid direction.\n");
     }
 }
