@@ -13,14 +13,14 @@ void PlayerMovement(CASE **grid, Players robot)
     case 'z': // aller en haut
         while (grid[robot.robot_row + 1][robot.robot_col].state == IS_EMPTY)
         {
-            robot.robot_row--;                                       // Met à jour les nouvelles coordonnées
+            robot.robot_row++;                                       // Met à jour les nouvelles coordonnées
             grid[robot.robot_row][robot.robot_col].state = IS_ROBOT; // Met à jour la nouvelle position du robot
         }
         break;
     case 'q': // aller en bas
         while (grid[robot.robot_row - 1][robot.robot_col].state == IS_EMPTY)
         {
-            (robot.robot_row)++;
+            (robot.robot_row)--;
             grid[robot.robot_row][robot.robot_col].state = IS_ROBOT;
         }
         break;
