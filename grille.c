@@ -145,12 +145,15 @@ void createGrid()
     for (int i = 0; i < rows; i++)
     {
         grid[i] = (CASE *)malloc(cols * sizeof(CASE));
+        
         if (grid[i] == NULL)
         {
+            printf("erreur d'allocation dynamique");
             for (int j = 0; j < i; j++)
             {
                 free(grid[j]);
             }
+
             free(grid);
             exit(EXIT_FAILURE);
         }
