@@ -15,24 +15,25 @@ int generateRandomNumber(int min, int max)
 
 void addBorderWall(CASE **grid, int rows, int cols)
 {
+    int col;
     for (int i = 0; i < 2; i++)
     {
-        int col = generateRandomNumber(1, cols - 2);
+        col=generateRandomNumber(1, cols - 2);
         grid[0][col].wall[EST] = WALL_PRESENT;
     }
     for (int i = 0; i < 2; i++)
     {
-        int col = generateRandomNumber(1, cols - 2);
+        col=generateRandomNumber(1, cols - 2);
         grid[rows - 1][col].wall[EST] = WALL_PRESENT;
     }
     for (int i = 0; i < 2; i++)
     {
-        int col = generateRandomNumber(1, rows - 2);
+        col=generateRandomNumber(1, rows - 2);
         grid[rows - 1][0].wall[SOUTH] = WALL_PRESENT;
     }
     for (int i = 0; i < 2; i++)
     {
-        int col = generateRandomNumber(1, rows - 2);
+        col=generateRandomNumber(1, rows - 2);
         grid[rows - 1][cols - 1].wall[SOUTH] = WALL_PRESENT;
     }
 }
@@ -161,9 +162,9 @@ void createGrid()
         {
 
             grid[row][col].state = IS_EMPTY;
-            for (int i = 0; i < 4; i++)
-            {
-                if (row == 0)
+
+            
+                if (row ==0)
                 {
                     grid[row][col].wall[NORTH] = WALL_PRESENT; // Bord supérieur
                 }
@@ -180,8 +181,8 @@ void createGrid()
                     grid[row][col].wall[EST] = WALL_PRESENT; // Bord droit
                 }
 
-                grid[row][col].wall[i] = WALL_ABSENT;
-            }
+
+
         }
     }
     addBorderWall(grid, rows, cols);
