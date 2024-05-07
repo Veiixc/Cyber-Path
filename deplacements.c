@@ -4,13 +4,13 @@
 void PlayerMovement(CASE **grid, Players robot)
 { // La fonction prend en paramètres la grille et la structure du joueur pour récupérer ses coordonnées
     char direction;
-    printf("Quelle direction ?:\n1=HAUT\n2=BAS\n3=GAUCHE\n4=DROITE\n");
+    printf("Quelle direction ?:\n'z'=HAUT\n'q'=BAS\n's'=GAUCHE\n'd'=DROITE\n");
     scanf("%d", &direction);
     grid[robot.robot_row][robot.robot_col].state = IS_EMPTY; // Vide l'ancienne position
     while (direction != 'z' || direction != 'q' || direction != 's' || direction != 'd')
     {
         printf("Mauvaise direction !\n");
-        printf("Quelle direction ?:\n1=HAUT\n2=BAS\n3=GAUCHE\n4=DROITE\n");
+        printf("Quelle direction ?:\n'z'=HAUT\n'q'=BAS\n's'=GAUCHE\n'd'=DROITE\n");
         scanf("%c", &direction);
         
      }
