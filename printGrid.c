@@ -47,7 +47,7 @@ void printGrid(CASE **grid, int rows, int cols)
                 printf("O"); // Cible
             }
 
-            if (grid[row][col].wall[EST] == WALL_PRESENT)
+            if (grid[row][col].wall[EAST] == WALL_PRESENT)
             {
                 printf("|"); // Mur à droite de la case
             }

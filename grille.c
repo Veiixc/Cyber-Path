@@ -19,12 +19,12 @@ void addBorderWall(CASE **grid, int rows, int cols)
     for (int i = 0; i < 2; i++)
     {
         col=generateRandomNumber(1, cols - 2);
-        grid[0][col].wall[EST] = WALL_PRESENT;
+        grid[0][col].wall[EAST] = WALL_PRESENT;
     }
     for (int i = 0; i < 2; i++)
     {
         col=generateRandomNumber(1, cols - 2);
-        grid[rows - 1][col].wall[EST] = WALL_PRESENT;
+        grid[rows - 1][col].wall[EAST] = WALL_PRESENT;
     }
     for (int i = 0; i < 2; i++)
     {
@@ -50,7 +50,7 @@ void addWall(CASE *caseGrid)
 
     case 1: // mur au sud et à l'est
         caseGrid->wall[SOUTH] = WALL_PRESENT;
-        caseGrid->wall[EST] = WALL_PRESENT;
+        caseGrid->wall[EAST] = WALL_PRESENT;
         break;
 
     case 2: // mur au nord et à l'ouest
@@ -60,7 +60,7 @@ void addWall(CASE *caseGrid)
 
     case 3: // mur au nord et à l'est
         caseGrid->wall[NORTH] = WALL_PRESENT;
-        caseGrid->wall[EST] = WALL_PRESENT;
+        caseGrid->wall[EAST] = WALL_PRESENT;
         break;
     }
 }
@@ -181,7 +181,7 @@ void createGrid()
                 }
                 if (col == cols - 1)
                 {
-                    grid[row][col].wall[EST] = WALL_PRESENT; // Bord droit
+                    grid[row][col].wall[EAST] = WALL_PRESENT; // Bord droit
                 }
 
 
