@@ -1,9 +1,10 @@
 
 #include "./struct.h"
+#include "./deplacements.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-void printGrid(CASE **grid, int rows, int cols)
+void printGrid(CASE **grid, int rows, int cols, Players* player_robot)
 {
     printf("row : %d, cols : %d\n", rows, cols);
     for (int row = 0; row < rows; row++)
@@ -73,4 +74,5 @@ void printGrid(CASE **grid, int rows, int cols)
         }
         printf("\n");
     }
+    PlayerMovement(grid,player_robot,rows,cols);
 }

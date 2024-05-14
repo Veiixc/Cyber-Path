@@ -130,6 +130,7 @@ void addRobots(CASE **grid, int rows, int cols)
             compteurRobots++;
         }
     }
+    printGrid(grid, rows, cols,player_robot);
 }
 
 void createGrid()
@@ -191,7 +192,6 @@ void createGrid()
     addBorderWall(grid, rows, cols);
     addTargetAndWall(grid, cols, rows);
     addRobots(grid, rows, cols);
-    printGrid(grid, rows, cols);
 
     for (int i = 0; i < rows; i++)
     {

@@ -2,6 +2,6 @@
 #define PRINtGRID_H
 #include "./struct.h"
 
-void printGrid(CASE **grid, int rows, int cols);
+void printGrid(CASE **grid, int rows, int cols, Players* player_robot);
 
 #endif
