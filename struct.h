@@ -13,7 +13,7 @@ enum State
 enum WALL
 {
     NORTH,
-    EST,    
+    EAST,    
     SOUTH,
     WEST
 };

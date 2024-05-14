@@ -1,7 +1,7 @@
 # Compiler flags
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
-LDFLAGS = -lm
+LDFLAGS = -lm -lncurses
 
 # Source files
 SRCS = grille.c printGrid.c Joueurs.c deplacements.c
