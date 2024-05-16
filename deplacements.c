@@ -2,47 +2,49 @@
 #include "./struct.h"
 #include "./printgrid.h"
 
-void PlayerMovement(CASE **grid, Players* robot,int rows, int cols)
-{ // La fonction prend en paramètres la grille et la structure du joueur pour récupérer ses coordonnées
+void PlayerMovement(CASE **grid, Players* player_robot, int rows, int cols)
+{
     char direction;
     printf("Quelle direction ?:\n'z'=HAUT\n's'=BAS\n'q'=GAUCHE\n'd'=DROITE\n");
-    scanf("%c", &direction);
-    
-    // Vérification de la direction saisie
+    scanf(" %c", &direction);
+
+    int newRow = player_robot[0].robot_row;
+    int newCol = player_robot[0].robot_col;
+
     switch (direction)
     {
-    case 'z': // aller en haut
-        while (grid[robot[0].robot_row - 1][robot[0].robot_col].state == IS_EMPTY && robot[0].robot_row>0)
+    case 'z': // move up
+        while (newRow > 0 && grid[newRow - 1][newCol].state == IS_EMPTY && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT)
         {
-            grid[robot[0].robot_row][robot[0].robot_col].state = IS_EMPTY; // Vide l'ancienne position       
-            robot[0].robot_row--; // Met à jour les nouvelles coordonnées
-            grid[robot[0].robot_row][robot[0].robot_col].state = IS_ROBOT; // Met à jour la nouvelle position du robot
+            newRow--;
         }
         break;
-    case 's': // aller en bas
-        while (grid[robot[0].robot_row + 1][robot[0].robot_col].state == IS_EMPTY && robot[0].robot_row<rows)
+    case 's': // move down
+        while (newRow < rows - 1 && grid[newRow + 1][newCol].state == IS_EMPTY && grid[newRow + 1][newCol].wall[NORTH] == WALL_ABSENT)
         {
-             grid[robot[0].robot_row][robot[0].robot_col].state = IS_EMPTY; // Vide l'ancienne position       
-            (robot[0].robot_row)++;
-            grid[robot[0].robot_row][robot[0].robot_col].state = IS_ROBOT;
+            newRow++;
         }
         break;
-    case 'q': // aller à gauche
-        while (grid[robot[0].robot_row][robot[0].robot_col - 1].state == IS_EMPTY && robot[0].robot_row>0)
+    case 'q': // move left
+        while (newCol > 0 && grid[newRow][newCol - 1].state == IS_EMPTY && grid[newRow][newCol - 1].wall[EAST] == WALL_ABSENT)
         {
-            grid[robot[0].robot_row][robot[0].robot_col].state = IS_EMPTY; // Vide l'ancienne position       
-            (robot[0].robot_col)--;
-            grid[robot[0].robot_row][robot[0].robot_col].state = IS_ROBOT;
+            newCol--;
         }
         break;
-    case 'd': // aller à droite
-        while (grid[robot[0].robot_row][robot[0].robot_col + 1].state == IS_EMPTY && robot[0].robot_row<cols)
+    case 'd': // move right
+        while (newCol < cols - 1 && grid[newRow][newCol + 1].state == IS_EMPTY && grid[newRow][newCol + 1].wall[WEST] == WALL_ABSENT)
         {
-            grid[robot[0].robot_row][robot[0].robot_col].state = IS_EMPTY; // Vide l'ancienne position       
-            (robot[0].robot_col)++;
-            grid[robot[0].robot_row][robot[0].robot_col].state = IS_ROBOT;
+            newCol++;
         }
         break;
+    }
+
+    if (newRow != player_robot[0].robot_row || newCol != player_robot[0].robot_col)
+    {
+        grid[player_robot[0].robot_row][player_robot[0].robot_col].state = IS_EMPTY;
+        player_robot[0].robot_row = newRow;
+        player_robot[0].robot_col = newCol;
+        grid[player_robot[0].robot_row][player_robot[0].robot_col].state = IS_ROBOT;
     }
     printGrid(grid,rows,cols,robot);
 }
