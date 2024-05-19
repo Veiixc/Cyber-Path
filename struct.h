@@ -42,6 +42,8 @@ typedef struct Players
     int robot_row;
     int robot_col;
     int num;
+    int target;
+    int win;
     // ...
 }Players;
 

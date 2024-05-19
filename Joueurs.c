@@ -17,7 +17,7 @@ int Better_Scanf(char *message)
     return value;
 }
 
-void CreatePlayers(Players *players)
+Players* CreatePlayers(Players *players)
 {
     do
     {
@@ -29,6 +29,7 @@ void CreatePlayers(Players *players)
         scanf("%s", players[i].name);
         players[i].score = 0; // initialisation de tout les scores a 0
     }
+    return players;
 }
 
 void CalculScore(Players *player, int score)
@@ -86,16 +87,15 @@ int ChoiceDifficulty()
     return difficulty;
 }
 
-int Num_estimated(Players *players, int num_robot)
+Players Num_estimated(Players players)
 {
-    int nb_estimated_movement;
+    players.target=rand()%19+1;
     do
     {
-        printf("En combien de coups estimez-vous rejoindre le robot %d ?\n",
-               num_robot);
-        scanf("%d", &nb_estimated_movement);
-    } while (nb_estimated_movement < 0);
-    return nb_estimated_movement;
+        printf("En combien de coups estimez-vous atteindre la cible %d?\n", players.target);
+        scanf("%d", &players.nb_estimated_movement);
+    } while (players.nb_estimated_movement < 0);
+    return players;
 }
 
 void Timer()

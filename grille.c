@@ -1,9 +1,10 @@
-#include "./struct.h"
-#include "./printgrid.h"
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "./struct.h"
+#include "./printgrid.h"
+#include "./Joueurs.h"
+#include "./deplacements.h"
 
 #define MIN_SIZE 15
 #define MAX_SIZE 20
@@ -107,20 +108,15 @@ void addTargetAndWall(CASE **grid, int cols, int rows)
 //     }
 // }
 
-void addRobots(CASE **grid, int rows, int cols)
+Players* addRobots(CASE **grid, int rows, int cols,Players* player_robot)
 {
-    int compteurRobots = 1;
-    Players *player_robot = NULL;
-    player_robot = malloc(sizeof(Players) * 4);
-    if (player_robot == NULL)
+    int robotRow;
+    int robotCol;
+    int compteurRobots = 0;
+    for (int i = 0; i < player_robot->num; i++)
     {
-        printf("Erreur d'allocation");
-        exit(1);
-    }
-    for (int i = 0; i < 4; i++)
-    {
-        int robotRow = generateRandomNumber(0, rows - 1);
-        int robotCol = generateRandomNumber(0, cols - 1);
+        robotRow = generateRandomNumber(0, rows - 1);
+        robotCol = generateRandomNumber(0, cols - 1);
         if (grid[robotRow][robotCol].state == IS_EMPTY)
         {
             grid[robotRow][robotCol].state = IS_ROBOT;
@@ -129,37 +125,15 @@ void addRobots(CASE **grid, int rows, int cols)
             grid[robotRow][robotCol].robot_number = compteurRobots;
             compteurRobots++;
         }
-    }
-    printGrid(grid, rows, cols,player_robot);
-}
-
-void createGrid()
-{
-    int rows = generateRandomNumber(15, 20);
-    int cols = generateRandomNumber(15, 20);
-    CASE **grid = (CASE **)malloc(rows * sizeof(CASE *));
-    if (grid == NULL)
-    {
-        printf("erreur d'allocation dynamique");
-        exit(EXIT_FAILURE);
-    }
-    for (int i = 0; i < rows; i++)
-    {
-        grid[i] = (CASE *)malloc(cols * sizeof(CASE));
-        
-        if (grid[i] == NULL)
-        {
-            printf("erreur d'allocation dynamique");
-            for (int j = 0; j < i; j++)
-            {
-                free(grid[j]);
-            }
-
-            free(grid);
-            exit(EXIT_FAILURE);
+        else{
+            i--;
         }
     }
+    return player_robot;
+}
 
+CASE** createGrid(CASE** grid,int rows,int cols)
+{
     for (int row = 0; row < rows; row++)
     {
         for (int col = 0; col < cols; col++)
@@ -191,18 +165,66 @@ void createGrid()
     }
     addBorderWall(grid, rows, cols);
     addTargetAndWall(grid, cols, rows);
-    addRobots(grid, rows, cols);
+    return grid;
+}
+
+int main()
+{
+    srand(time(NULL));
+    int rows = generateRandomNumber(15, 20);
+    int cols = generateRandomNumber(15, 20);
+    CASE **grid = (CASE **)malloc(rows * sizeof(CASE *));
+    if (grid == NULL)
+    {
+        printf("erreur d'allocation dynamique");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < rows; i++)
+    {
+        grid[i] = (CASE *)malloc(cols * sizeof(CASE));
+        
+        if (grid[i] == NULL)
+        {
+            printf("erreur d'allocation dynamique");
+            for (int j = 0; j < i; j++)
+            {
+                free(grid[j]);
+            }
+
+            free(grid);
+            exit(EXIT_FAILURE);
+        }
+    }
+    Players *player = NULL;
+    player = malloc(sizeof(Players) * 4);
+    if (player == NULL)
+    {
+        printf("Erreur d'allocation");
+        exit(1);
+    }
+    player=CreatePlayers(player);
+    grid=createGrid(grid,rows,cols);
+    player=addRobots(grid,rows,cols,player);
+    printGrid(grid, rows, cols);
+    Timer();
+    for (int i=0;i<player->num;i++){
+        player[i]=Num_estimated(player[i]);
+        player[i].win=PlayerMovement(grid,player[i],rows,cols);
+        printGrid(grid, rows, cols);
+    }
+    for (int i=0;i<player->num;i++){
+        if (player[i].win==1){
+            printf("Le joueur %d a gagné",i);
+            break;
+        }
+    }
+
 
     for (int i = 0; i < rows; i++)
     {
         free(grid[i]);
     }
     free(grid);
-}
-
-int main()
-{
-    srand(time(NULL));
-    createGrid();
+    
     return 0;
 }

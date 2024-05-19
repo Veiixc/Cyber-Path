@@ -1,10 +1,8 @@
-
-#include "./struct.h"
-#include "./deplacements.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "./struct.h"
 
-void printGrid(CASE **grid, int rows, int cols, Players* player_robot)
+void printGrid(CASE **grid, int rows, int cols)
 {
     printf("row : %d, cols : %d\n", rows, cols);
     for (int row = 0; row < rows; row++)
@@ -45,7 +43,7 @@ void printGrid(CASE **grid, int rows, int cols, Players* player_robot)
             }
             else if (grid[row][col].state == IS_TARGET)
             {
-                printf("O"); // Cible
+                printf("%d",grid[row][col].target_number); // Cible
             }
 
             if (grid[row][col].wall[EAST] == WALL_PRESENT)
@@ -74,5 +72,4 @@ void printGrid(CASE **grid, int rows, int cols, Players* player_robot)
         }
         printf("\n");
     }
-    PlayerMovement(grid,player_robot,rows,cols);
 }
