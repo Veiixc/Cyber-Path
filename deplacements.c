@@ -58,5 +58,4 @@ int PlayerMovement(CASE **grid, Players player_robot, int rows, int cols)
     else{
         return 0;
     }
-
 }
