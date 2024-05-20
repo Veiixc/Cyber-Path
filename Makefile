@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -std=c99
 LDFLAGS = -lm
 
 # Source files
-SRCS = grille.c printGrid.c Joueurs.c deplacements.c
+SRCS = main.c grille.c printGrid.c Joueurs.c deplacements.c
 OBJS = $(SRCS:.c=.o)
 TARGET = Cyber_path
 

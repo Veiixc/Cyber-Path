@@ -17,7 +17,7 @@ int Better_Scanf(char *message)
     return value;
 }
 
-Players* CreatePlayers(Players *players)
+Players *createPlayers(Players *players)
 {
     do
     {
@@ -28,8 +28,9 @@ Players* CreatePlayers(Players *players)
         printf("Veuillez saisir Le nom du joueur %d : ", i + 1);
         scanf("%s", players[i].name);
         players[i].score = 0; // initialisation de tout les scores a 0
+        players[i].nb_movement = 0;
     }
-    return players;
+    return players; //
 }
 
 void CalculScore(Players *player, int score)
@@ -87,41 +88,43 @@ int ChoiceDifficulty()
     return difficulty;
 }
 
-Players Num_estimated(Players players)
+void Num_estimated(Players *player, int target_robot, int target_target)
 {
-    players.target=rand()%19+1;
     do
     {
-        printf("En combien de coups estimez-vous atteindre la cible %d?\n", players.target);
-        scanf("%d", &players.nb_estimated_movement);
-    } while (players.nb_estimated_movement < 0);
-    return players;
+        printf("%s, en combien de coups estimez-vous atteindre la cible %d avec le robot %d?\n", player->name, target_target, target_robot);
+        scanf("%d", &player->nb_estimated_movement);
+        player->nb_movement = 0;
+    } while (player->nb_estimated_movement < 0);
 }
 
-void Timer()
+void Timer(int difficulty)
 {
-    int difficulty = ChoiceDifficulty();
     int remaining_time;
 
     switch (difficulty)
     {
     case 1:
-        remaining_time = 10;
+        remaining_time = 15;
         break;
     case 2:
-        remaining_time = 5;
+        remaining_time = 10;
         break;
     case 3:
-        remaining_time = 3;
+        remaining_time = 1;
         break;
     default:
         remaining_time = 10;
+        break;
     }
 
     for (int i = 1; i <= remaining_time; i++)
     {
-        printf("\r%d/%d", i, remaining_time);
         sleep(1); // Attendre une seconde
+        printf("\r%d/%d", i, remaining_time);
+        fflush(stdout);
     }
+    // system("clear"); //
+    printf("\033[H\033[2J");
     printf("\nTemps écoulé !\n");
 }

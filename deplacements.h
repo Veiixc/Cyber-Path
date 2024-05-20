@@ -2,6 +2,6 @@
 #define DEPLACEMENTS_H
 #include "./struct.h"
 
-int PlayerMovement(CASE **grid, Players player_robot, int rows, int cols);
+void PlayerMovement(CASE **grid, Players *player_robot, Robot *robot, int rows, int cols, int target_robot, int target_target);
 
 #endif

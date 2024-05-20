@@ -3,13 +3,11 @@
 #include "./struct.h"
 
 int Better_Scanf(char *message);
-Players* CreatePlayers(Players *players);
+Players *createPlayers(Players *players);
 void CalculScore(Players *player, int score);
 void PrintWinner(Players *players);
 int ChoiceDifficulty();
-Players Num_estimated(Players players);
-void Timer();
-
-
+void Num_estimated(Players *players, int target_robot, int target_target);
+void Timer(int difficulty);
 
 #endif

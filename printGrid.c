@@ -39,11 +39,11 @@ void printGrid(CASE **grid, int rows, int cols)
             }
             else if (grid[row][col].state == IS_ROBOT)
             {
-                printf("R"); // Robot
+                printf("%d", grid[row][col].robot_number); // Robot
             }
             else if (grid[row][col].state == IS_TARGET)
             {
-                printf("%d",grid[row][col].target_number); // Cible
+                printf("%d", grid[row][col].target_number); // Cible
             }
 
             if (grid[row][col].wall[EAST] == WALL_PRESENT)

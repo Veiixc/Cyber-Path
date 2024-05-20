@@ -13,7 +13,7 @@ enum State
 enum WALL
 {
     NORTH,
-    EAST,    
+    EAST,
     SOUTH,
     WEST
 };
@@ -33,7 +33,7 @@ typedef struct CASE
 } CASE;
 
 typedef struct Players
-{   
+{
     int robot;
     char name[24];
     int score;
@@ -45,6 +45,21 @@ typedef struct Players
     int target;
     int win;
     // ...
-}Players;
+} Players;
 
-#endif 
+typedef struct
+{
+    int index;
+    char name[24];
+
+    // row an col after a player plays
+    int actual_robot_row;
+    int actual_robot_col;
+
+    // row and col at the beginning of the round
+    int initial_robot_row;
+    int initial_robot_col;
+    // ...
+} Robot;
+
+#endif
