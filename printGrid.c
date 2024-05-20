@@ -35,7 +35,7 @@ void printGrid(CASE **grid, int rows, int cols)
 
             if (grid[row][col].state == IS_EMPTY)
             {
-                printf(". "); // Case vide
+                printf(" ."); // Case vide
             }
             else if (grid[row][col].state == IS_ROBOT)
             {
