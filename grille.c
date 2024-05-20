@@ -349,7 +349,7 @@ void addRobots(CASE **grid, int rows, int cols)
             compteurRobots++;
         }
     }
-    printGrid(grid, rows, cols, player_robot);
+    printGrid(grid, rows, cols);
 }
 
 void createGrid()
