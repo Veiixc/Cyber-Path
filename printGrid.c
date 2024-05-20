@@ -12,11 +12,11 @@ void printGrid(CASE **grid, int rows, int cols)
         {
             if (grid[row][col].wall[NORTH] == WALL_PRESENT)
             {
-                printf(" ― "); // Mur au-dessus de la case
+                printf(" __ "); // Mur au-dessus de la case
             }
             else
             {
-                printf("   "); // Pas de mur
+                printf("    "); // Pas de mur
             }
         }
         printf("\n");
@@ -35,15 +35,15 @@ void printGrid(CASE **grid, int rows, int cols)
 
             if (grid[row][col].state == IS_EMPTY)
             {
-                printf("."); // Case vide
+                printf(". "); // Case vide
             }
             else if (grid[row][col].state == IS_ROBOT)
             {
-                printf("%d", grid[row][col].robot_number); // Robot
+                printf(RED "%2d" DEFAULT_COLOR, grid[row][col].robot_number); // Robot
             }
             else if (grid[row][col].state == IS_TARGET)
             {
-                printf("%d", grid[row][col].target_number); // Cible
+                printf(BLUE "%2d" DEFAULT_COLOR, grid[row][col].target_number); // Cible
             }
 
             if (grid[row][col].wall[EAST] == WALL_PRESENT)
@@ -63,11 +63,11 @@ void printGrid(CASE **grid, int rows, int cols)
         {
             if (grid[row][col].wall[SOUTH] == WALL_PRESENT)
             {
-                printf(" _ "); // Mur en dessous de la case
+                printf(" ―― "); // Mur en dessous de la case ―
             }
             else
             {
-                printf("   "); // Pas de mur
+                printf("    "); // Pas de mur
             }
         }
         printf("\n");

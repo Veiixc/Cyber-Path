@@ -117,24 +117,6 @@ void addRobots(CASE **grid, int rows, int cols, Robot *robots)
             i++;
         }
     }
-    // for (int i = 0; i < MAX_ROBOT; i++)
-    // {
-    //     robotRow = generateRandomNumber(0, rows - 1);
-    //     robotCol = generateRandomNumber(0, cols - 1);
-    //     if (grid[robotRow][robotCol].state == IS_EMPTY)
-    //     {
-    //         grid[robotRow][robotCol].state = IS_ROBOT;
-    //         player_robot[i].robot_row = robotRow;
-    //         player_robot[i].robot_col = robotCol;
-    //         grid[robotRow][robotCol].robot_number = compteurRobots;
-    //         compteurRobots++;
-    //     }
-    //     else
-    //     {
-    //         i--;
-    //     }
-    // }
-    // return player_robot;
 }
 
 void createGrid(CASE **grid, int rows, int cols)
