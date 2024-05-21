@@ -44,6 +44,7 @@ typedef struct Players
     int num;
     int target;
     int win;
+    int color;
     // ...
 }Players;
 

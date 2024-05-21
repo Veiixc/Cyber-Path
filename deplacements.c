@@ -24,7 +24,7 @@ int PlayerMovement(CASE **grid, Players player_robot, int rows, int cols)
         switch (direction)
         {
         case 'z': // move up
-            while (newRow > 0  && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT && grid[newRow - 1][newCol])
+            while (newRow > 0  && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT)
             {   
                 newRow--;
             }
@@ -59,5 +59,4 @@ int PlayerMovement(CASE **grid, Players player_robot, int rows, int cols)
         }
 
     }
-    printGrid(grid, rows, cols);
 }
