@@ -1,79 +1,90 @@
 #include <stdio.h>
 #include "./struct.h"
 #include "./printgrid.h"
-
 void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int cols, int target_robot, int target_target)
 {
     char direction;
-    int newRow;
-    int newCol;
+    int newRow, newCol;
 
     while (player->nb_movement < player->nb_estimated_movement)
     {
-        // ajouter un controle sur les données entrées
+        // Demander la direction du déplacement
         printf("%s, quelle direction ?:\n'z'=HAUT\n's'=BAS\n'q'=GAUCHE\n'd'=DROITE\n", player->name);
         scanf(" %c", &direction);
 
+        // Initialiser les nouvelles coordonnées à celles actuelles
         newRow = robot->actual_robot_row;
         newCol = robot->actual_robot_col;
 
+        // Déterminer la nouvelle position en fonction de la direction
         switch (direction)
         {
-            // cas rencontre d'une autre cible
-        case 'z': // move up
-            while (newRow > 0 && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT)
-            {
-                newRow--;
-            }
-            break;
-        case 's': // move down
-            while (newRow < rows - 1 && grid[newRow + 1][newCol].wall[NORTH] == WALL_ABSENT)
-            {
-                newRow++;
-            }
-            break;
-        case 'q': // move left
-            while (newCol > 0 && grid[newRow][newCol - 1].wall[EAST] == WALL_ABSENT)
-            {
-                newCol--;
-            }
-            break;
-        case 'd': // move right
-            while (newCol < cols - 1 && grid[newRow][newCol + 1].wall[WEST] == WALL_ABSENT)
-            {
-                newCol++;
-            }
-            break;
-        default:
-            printf("mauvaise entrée");
-            break;
+            case 'z': // Monter
+                while (newRow > 0 && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT && grid[newRow - 1][newCol].state != IS_ROBOT)
+                {
+                    newRow--;
+                    if (grid[newRow][newCol].wall[NORTH] == WALL_PRESENT)
+                        break;
+                }
+                break;
+            case 's': // Descendre
+                while (newRow < rows - 1 && grid[newRow + 1][newCol].wall[NORTH] == WALL_ABSENT && grid[newRow + 1][newCol].state != IS_ROBOT)
+                {
+                    newRow++;
+                    if (grid[newRow][newCol].wall[SOUTH] == WALL_PRESENT)
+                        break;
+                }
+                break;
+            case 'q': // Gauche
+                while (newCol > 0 && grid[newRow][newCol - 1].wall[EAST] == WALL_ABSENT && grid[newRow][newCol - 1].state != IS_ROBOT)
+                {
+                    newCol--;
+                    if (grid[newRow][newCol].wall[WEST] == WALL_PRESENT)
+                        break;
+                }
+                break;
+            case 'd': // Droite
+                while (newCol < cols - 1 && grid[newRow][newCol + 1].wall[WEST] == WALL_ABSENT && grid[newRow][newCol + 1].state != IS_ROBOT)
+                {
+                    newCol++;
+                    if (grid[newRow][newCol].wall[EAST] == WALL_PRESENT)
+                        break;
+                }
+                break;
+            default:
+                printf("Mauvaise entrée\n");
+                continue; // Redemander la direction si l'entrée est invalide
         }
 
+        // Mise à jour du nombre de mouvements effectués
         player->nb_movement++;
+
+        // Ajout du robot sur la nouvelle case
+        grid[newRow][newCol].state = IS_ROBOT;
+        grid[newRow][newCol].robot_number = robot->index;
+
+        // Suppression du robot de l'ancienne case
+        grid[robot->actual_robot_row][robot->actual_robot_col].state = IS_EMPTY;
+        grid[robot->actual_robot_row][robot->actual_robot_col].robot_number = -1;
+
+        // Mise à jour des coordonnées du robot
+        robot->actual_robot_row = newRow;
+        robot->actual_robot_col = newCol;
+
+        // Vérifie si le robot est sur la case de la cible
+        if (grid[robot->actual_robot_row][robot->actual_robot_col].target_number == target_target)
+        {
+            printf("Bien joué.\n");
+            break; // Sortir de la boucle car le robot a atteint la cible
+        }
+        else
+        {
+            printf("Pas sur la cible\n");
+        }
+
+        printGrid(grid, rows, cols); // Afficher la grille après chaque mouvement
     }
 
-    // ajout du robot sur la nouvelle case
-    grid[newRow][newCol].state = IS_ROBOT;
-    grid[newRow][newCol].robot_number = robot->index;
-
-    // Suppression du robot de l'ancienne case
-    grid[robot->actual_robot_row][robot->actual_robot_col].state = IS_EMPTY;
-    grid[robot->actual_robot_row][robot->actual_robot_col].robot_number = -1;
-
-    // maj des coordonnées du robot
-    robot->actual_robot_row = newRow;
-    robot->actual_robot_col = newCol;
-
+    // Afficher la grille finale
     printGrid(grid, rows, cols);
-    // verifie si robot est sur al case de la cible
-    // ajout des scores. voir pour ajouter la structure players et non uniquement le joueur
-    // pour ajouter des points aux ennemis si on perd
-    if (grid[robot->actual_robot_row][robot->actual_robot_col].target_number == target_target)
-    {
-        printf("bien joué.\n");
-    }
-    else
-    {
-        printf("pas sur la cible\n");
-    }
 }
