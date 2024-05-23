@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "./struct.h"
 #include "./printgrid.h"
+
 void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int cols, int target_robot, int target_target)
 {
     char direction;
@@ -9,7 +10,7 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
     while (player->nb_movement < player->nb_estimated_movement)
     {
         // Demander la direction du déplacement
-        printf("%s, quelle direction ?:\n'z'=HAUT\n's'=BAS\n'q'=GAUCHE\n'd'=DROITE\n", player->name);
+        printf("%s, Quelle direction ?:\n'z'=HAUT\n's'=BAS\n'q'=GAUCHE\n'd'=DROITE\n", player->name);
         scanf(" %c", &direction);
 
         // Initialiser les nouvelles coordonnées à celles actuelles
@@ -19,7 +20,7 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
         // Déterminer la nouvelle position en fonction de la direction
         switch (direction)
         {
-            case 'z': // Monter
+            case 'z': // Go up
                 while (newRow > 0 && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT && grid[newRow - 1][newCol].state != IS_ROBOT)
                 {
                     newRow--;
@@ -27,7 +28,7 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
                         break;
                 }
                 break;
-            case 's': // Descendre
+            case 's': // Go down
                 while (newRow < rows - 1 && grid[newRow + 1][newCol].wall[NORTH] == WALL_ABSENT && grid[newRow + 1][newCol].state != IS_ROBOT)
                 {
                     newRow++;
@@ -35,7 +36,7 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
                         break;
                 }
                 break;
-            case 'q': // Gauche
+            case 'q': // Move to the left
                 while (newCol > 0 && grid[newRow][newCol - 1].wall[EAST] == WALL_ABSENT && grid[newRow][newCol - 1].state != IS_ROBOT)
                 {
                     newCol--;
@@ -43,7 +44,7 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
                         break;
                 }
                 break;
-            case 'd': // Droite
+            case 'd': // Move to the right
                 while (newCol < cols - 1 && grid[newRow][newCol + 1].wall[WEST] == WALL_ABSENT && grid[newRow][newCol + 1].state != IS_ROBOT)
                 {
                     newCol++;
@@ -55,9 +56,6 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
                 printf("Mauvaise entrée\n");
                 continue; // Redemander la direction si l'entrée est invalide
         }
-
-        // Mise à jour du nombre de mouvements effectués
-        player->nb_movement++;
 
         // Ajout du robot sur la nouvelle case
         grid[newRow][newCol].state = IS_ROBOT;
@@ -71,19 +69,21 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
         robot->actual_robot_row = newRow;
         robot->actual_robot_col = newCol;
 
+        printGrid(grid, rows, cols); // Afficher la grille après chaque mouvement
+        // Mise à jour du nombre de mouvements effectués
+        printf("Tu as fait %d/%d déplacements\n",player->nb_movement+1,player->nb_estimated_movement);
+        player->nb_movement++;
+    }
+
         // Vérifie si le robot est sur la case de la cible
         if (grid[robot->actual_robot_row][robot->actual_robot_col].target_number == target_target)
         {
             printf("Bien joué.\n");
-            break; // Sortir de la boucle car le robot a atteint la cible
         }
         else
         {
             printf("Pas sur la cible\n");
         }
-
-        printGrid(grid, rows, cols); // Afficher la grille après chaque mouvement
-    }
 
     // Afficher la grille finale
     printGrid(grid, rows, cols);
