@@ -117,9 +117,6 @@ void Timer(int difficulty)
     case 3:
         remaining_time = 1;
         break;
-    default:
-        remaining_time = 10;
-        break;
     }
 
     for (int i = 1; i <= remaining_time; i++)

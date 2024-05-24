@@ -73,7 +73,7 @@ int main()
         for (int i = 0; i < player->num; i++)
         {
             printGrid(grid, rows, cols);
-            PlayerMovement(grid, &player[i], &robots[target_robot], rows, cols, target_robot, target_target);
+            PlayerMovement(grid, &player[i], &robots[target_robot], rows, cols, target_target);
             grid[robots[target_robot].actual_robot_row][robots[target_robot].actual_robot_col].state = IS_EMPTY;
             robots[target_robot].actual_robot_row = robots[target_robot].initial_robot_row;
             robots[target_robot].actual_robot_col = robots[target_robot].initial_robot_col;

@@ -2,7 +2,7 @@
 #include "./struct.h"
 #include "./printgrid.h"
 
-void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int cols, int target_robot, int target_target)
+void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int cols, int target_target)
 {
     char direction;
     int newRow, newCol;
