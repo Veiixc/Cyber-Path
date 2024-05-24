@@ -21,35 +21,27 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
         switch (direction)
         {
             case 'z': // Go up
-                while (newRow > 0 && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT && grid[newRow - 1][newCol].state != IS_ROBOT)
+                while (newRow > 0 && grid[newRow - 1][newCol].wall[SOUTH] == WALL_ABSENT && grid[newRow][newCol].wall[NORTH] == WALL_ABSENT && grid[newRow - 1][newCol].state != IS_ROBOT)
                 {
                     newRow--;
-                    if (grid[newRow][newCol].wall[NORTH] == WALL_PRESENT)
-                        break;
                 }
                 break;
             case 's': // Go down
-                while (newRow < rows - 1 && grid[newRow + 1][newCol].wall[NORTH] == WALL_ABSENT && grid[newRow + 1][newCol].state != IS_ROBOT)
+                while (newRow < rows - 1 && grid[newRow + 1][newCol].wall[NORTH] == WALL_ABSENT && grid[newRow][newCol].wall[SOUTH] == WALL_ABSENT && grid[newRow + 1][newCol].state != IS_ROBOT)
                 {
                     newRow++;
-                    if (grid[newRow][newCol].wall[SOUTH] == WALL_PRESENT)
-                        break;
                 }
                 break;
             case 'q': // Move to the left
                 while (newCol > 0 && grid[newRow][newCol - 1].wall[EAST] == WALL_ABSENT && grid[newRow][newCol - 1].state != IS_ROBOT)
                 {
                     newCol--;
-                    if (grid[newRow][newCol].wall[WEST] == WALL_PRESENT)
-                        break;
                 }
                 break;
             case 'd': // Move to the right
-                while (newCol < cols - 1 && grid[newRow][newCol + 1].wall[WEST] == WALL_ABSENT && grid[newRow][newCol + 1].state != IS_ROBOT)
+                while (newCol < cols - 1 && grid[newRow][newCol + 1].wall[WEST] == WALL_ABSENT && grid[newRow][newCol].wall[EAST] == WALL_ABSENT && grid[newRow][newCol + 1].state != IS_ROBOT)
                 {
                     newCol++;
-                    if (grid[newRow][newCol].wall[EAST] == WALL_PRESENT)
-                        break;
                 }
                 break;
             default:
