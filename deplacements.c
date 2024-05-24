@@ -54,8 +54,10 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
         grid[newRow][newCol].robot_number = robot->index;
 
         // Suppression du robot de l'ancienne case
-        grid[robot->actual_robot_row][robot->actual_robot_col].state = IS_EMPTY;
-        grid[robot->actual_robot_row][robot->actual_robot_col].robot_number = -1;
+        if(newRow != robot->actual_robot_row || newCol != robot->actual_robot_col){
+            grid[robot->actual_robot_row][robot->actual_robot_col].state = IS_EMPTY;
+            grid[robot->actual_robot_row][robot->actual_robot_col].robot_number = -1;
+        }
 
         // Mise à jour des coordonnées du robot
         robot->actual_robot_row = newRow;
