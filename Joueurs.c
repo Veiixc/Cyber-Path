@@ -1,6 +1,8 @@
 #include "./struct.h"
 #include <stdio.h>
 #include <unistd.h>
+#define MaxPlayerInFile 10 // il y a max 10 joueurs dans le fichier;
+#define MaxPlayerInGame 4
 
 int Better_Scanf(char *message)
 {
@@ -127,4 +129,98 @@ void Timer(int difficulty)
     // system("clear"); //
     printf("\033[H\033[2J");
     printf("\nTemps écoulé !\n");
+}
+
+// Fonction pour charger les joueurs depuis le fichier
+void LoadPlayers(Players players[], int *numPlayers)
+{
+    *numPlayers = 0;
+    FILE *file = fopen("score.txt", "r");
+    if (file == NULL)
+    {
+        printf("Le fichier ne peut pas être lu\n");
+        return;
+    }
+    while (fscanf(file, "Nom : %49s | Score : %d\n", players[*numPlayers].name, &players[*numPlayers].score) == 2 && *numPlayers < MaxPlayerInFile)
+    {
+        (*numPlayers)++;
+    }
+    fclose(file);
+}
+
+// Fonction pour sauvegarder les joueurs dans le fichier
+void SavePlayersToFile(Players players[], int numPlayers)
+{
+    FILE *file = fopen("score.txt", "w");
+    if (file == NULL)
+    {
+        printf("Erreur lors de l'ouverture du fichier\n");
+        return;
+    }
+    for (int i = 0; i < numPlayers; i++)
+    {
+        fprintf(file, "Nom : %s | Score : %d\n", players[i].name, players[i].score);
+    }
+    fclose(file);
+}
+
+// Fonction pour ajouter ou mettre à jour un joueur dans le tableau
+void AddOrUpdatePlayer(Players players[], int *numPlayers, Players newPlayer)
+{
+    for (int i = 0; i < *numPlayers; i++)
+    {
+        if (strcmp(players[i].name, newPlayer.name) == 0)
+        { // Vérifie si le nom du joueur existe déjà
+            if (newPlayer.score > players[i].score)
+            {
+                players[i].score = newPlayer.score; // Met à jour le score si le nouveau score est supérieur
+            }
+            return;
+        }
+    }
+    if (*numPlayers < MaxPlayerInFile)
+    { // Si le fichier a un nombre de joueurs inférieur a 10, alors il peut ajouter des joueurs
+        players[*numPlayers] = newPlayer;
+        (*numPlayers)++;
+    }
+}
+
+// Fonction pour trier les joueurs par score en ordre décroissant
+void TriPlayersScore(Players players[], int numPlayers)
+{
+    for (int i = 0; i < numPlayers - 1; i++)
+    {
+        for (int j = 0; j < numPlayers - i - 1; j++)
+        {
+            if (players[j].score < players[j + 1].score)
+            {
+                Players temp = players[j];
+                players[j] = players[j + 1];
+                players[j + 1] = temp; // Place le score le plus élevé en haut
+            }
+        }
+    }
+}
+
+// Fonction pour gérer les joueurs et mettre à jour le fichier
+void ManageFile(Players gamePlayers[], int numGamePlayers)
+{
+    Players players[MaxPlayerInFile + MaxPlayerInGame]; // Capacité pour les joueurs existants et nouveaux
+    int numPlayers;
+
+    LoadPlayers(players, &numPlayers); // Charge les joueurs existants depuis le fichier
+
+    for (int i = 0; i < numGamePlayers; i++)
+    {
+        AddOrUpdatePlayer(players, &numPlayers, gamePlayers[i]);
+    }
+
+    TriPlayersScore(players, numPlayers);
+
+    if (numPlayers > MaxPlayerInFile)
+    {
+        numPlayers = MaxPlayerInFile;
+    }
+
+    SavePlayersToFile(players, numPlayers);
 }
