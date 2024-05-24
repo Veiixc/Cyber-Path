@@ -4,7 +4,7 @@
 
 int Better_Scanf(char *message);
 Players *createPlayers(Players *players);
-void CalculScore(Players *player, int score);
+void CalculScore(Players *player);
 void PrintWinner(Players *players);
 int ChoiceDifficulty();
 void Num_estimated(Players *players, int target_robot, int target_target);

@@ -78,10 +78,10 @@ int main()
             robots[target_robot].actual_robot_row = robots[target_robot].initial_robot_row;
             robots[target_robot].actual_robot_col = robots[target_robot].initial_robot_col;
             grid[robots[target_robot].actual_robot_row][robots[target_robot].actual_robot_col].state = IS_ROBOT;
-
+            CalculScore(player);
         }
     }
-
+    PrintWinner(player);
     printf("fin du programme");
 
     for (int i = 0; i < rows; i++)

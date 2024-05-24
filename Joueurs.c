@@ -37,7 +37,7 @@ Players *createPlayers(Players *players)
     return players; //
 }
 
-void CalculScore(Players *player, int score)
+void CalculScore(Players *player)
 {
     for (int i = 0; i < player->num; i++)
     { // on fait une boucle pour les n nombre de joueurs
