@@ -62,19 +62,42 @@ void CalculScore(Players *player)
     }
 }
 
-void PrintWinner(Players *players)
+void PrintWinner(Players *players, )
 {
     int best_score = players[0].score;
-    int winner = 0;
+    int num_winner;
+    bool tie;
+
     for (int i = 0; i < players->num; i++)
     {
         if (players[i].score > best_score)
-        { // on fait une sorte de tri afin de connaitre le meilleur score, mais aussi pour avoir le numéro du joueur au sein du tableau afin de mettre son nom et son score
+        {
             best_score = players[i].score;
-            winner = i;
+            num_winner = i;
+            tie = false;
+        }
+        else if (players[i].score == best_score)
+        {
+            tie = true;
         }
     }
-    printf("Le gagnant de la partie est %s\n Son score est de %d points \nFélicitation a tout les joueurs !", players[winner].name, players[winner].score);
+    if (!tie)
+    {
+        printf("Le gagnant de la partie est %s avec le score de %d",
+               players[i].name, players[i].score);
+    }
+    else
+    {
+        printf("Il y a égalité \nLes joueurs  ex aequo sont :\n ");
+        for (int i = 0; i < players->num; i++)
+        {
+            if (players[i].score == best_score)
+            {
+                ;
+                printf("%s avec le score de %d\n", players[i].name, players[i].score);
+            }
+        }
+    }
 }
 
 int ChoiceDifficulty()
