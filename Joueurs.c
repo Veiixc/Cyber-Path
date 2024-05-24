@@ -1,6 +1,8 @@
 #include "./struct.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
+
 #define MaxPlayerInFile 10 // il y a max 10 joueurs dans le fichier;
 #define MaxPlayerInGame 4
 
