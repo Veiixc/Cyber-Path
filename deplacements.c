@@ -33,7 +33,7 @@ void PlayerMovement(CASE **grid, Players *player, Robot *robot, int rows, int co
                 }
                 break;
             case 'q': // Move to the left
-                while (newCol > 0 && grid[newRow][newCol - 1].wall[EAST] == WALL_ABSENT && grid[newRow][newCol - 1].state != IS_ROBOT)
+                while (newCol > 0 && grid[newRow][newCol - 1].wall[EAST] == WALL_ABSENT && grid[newRow][newCol].wall[WEST] == WALL_ABSENT && grid[newRow][newCol - 1].state != IS_ROBOT)
                 {
                     newCol--;
                 }

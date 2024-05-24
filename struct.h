@@ -35,7 +35,7 @@ typedef struct CASE
 typedef struct Players
 {
     int robot;
-    char name[24];
+    char name[50];
     int score;
     int nb_movement;
     int nb_estimated_movement;
@@ -43,7 +43,6 @@ typedef struct Players
     int robot_col;
     int num;
     int target;
-    int win;
     // ...
 } Players;
 
