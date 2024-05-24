@@ -22,7 +22,7 @@ Players *createPlayers(Players *players)
     do
     {
         players->num = Better_Scanf("Veuillez saisir le nombre de joueurs (doit être supérieur à 2 et inférieur à 4) : ");
-    } while (players->num < 2 || players->num > 4); // on a un nombre de joueur minimum de 2 joueurs
+    } while (players->num < 2 || players - num->num > 4); // on a un nombre de joueur minimum de 2 joueurs
     for (int i = 0; i < players->num; i++)
     { // on fait une boucle pour demandez les noms de tout les joueurs
         printf("Veuillez saisir Le nom du joueur %d : ", i + 1);
