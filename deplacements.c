@@ -18,12 +18,6 @@ int PlayerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
         // Demander la direction du déplacement
         printf("%s, Quelle direction ?:\n'z'=HAUT\n's'=BAS\n'q'=GAUCHE\n'd'=DROITE\n", player->name);
         scanf(" %c", &direction);
-        if (direction == 'z' || direction == 'q' || direction || 's' || direction == 'd'){
-            printf("Il te reste %d déplacements !\n",player_robot.nb_estimated_movement);
-        }
-        else {
-            printf("Mauvaise touche\n");
-        }
 
         // Initialiser les nouvelles coordonnées à celles actuelles
         newRow = robot->actual_robot_row;
