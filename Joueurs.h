@@ -10,5 +10,6 @@ void printWinner(Player *players);
 int choiceDifficulty();
 void num_estimated(Player *players, int target_robot, int target_target);
 void timer(int difficulty);
+void manageFile(Player gamePlayers[], int numGamePlayers);
 
 #endif

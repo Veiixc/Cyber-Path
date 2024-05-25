@@ -58,8 +58,6 @@ void calculScore(Player *players, int result, int currentPlayer)
         }
         break;
     case IMPOSSIBLE:
-        // a definir
-        printf("score a definir\n"); // TODO
         break;
     default:
         break;
@@ -70,7 +68,7 @@ void printWinner(Player *players)
 {
     int best_score = players[0].score;
     int num_winner = 0;
-    bool is_ex_aequo = false;
+    bool draw = false;
 
     for (int i = 1; i < players[0].num; i++)
     {
@@ -78,15 +76,15 @@ void printWinner(Player *players)
         {
             best_score = players[i].score;
             num_winner = i;
-            is_ex_aequo = false;
+            draw = false;
         }
         else if (players[i].score == best_score)
         {
-            is_ex_aequo = true;
+            draw = true;
         }
     }
 
-    if (!is_ex_aequo)
+    if (!draw)
     {
         printf("Le gagnant de la partie est %s avec le score de %d\n",
                players[num_winner].name, players[num_winner].score);

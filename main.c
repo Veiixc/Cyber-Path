@@ -79,6 +79,7 @@ int main()
         }
     }
     printWinner(players);
+    manageFile(players, players->num);
     printf("\nfin du programme");
 
     for (int i = 0; i < rows; i++)
