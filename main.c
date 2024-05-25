@@ -62,7 +62,7 @@ int main()
         int target_target = generateRandomNumber(1, MAX_TARGET);
         printGrid(grid, rows, cols);
         printf("le robot choisi est le %d et la cible a atteindre est la %d\n", target_robot, target_target);
-        Timer(difficulty);
+        timer(difficulty);
 
         // estimation des mouvements pour chaque joueur
         for (int i = 0; i < players->num; i++)
@@ -74,7 +74,7 @@ int main()
         //  déplacement de chaque joueur
         for (int i = 0; i < players->num; i++)
         {
-            int result = PlayerMovement(grid, &players[i], &robots[target_robot], rows, cols, target_target);
+            int result = playerMovement(grid, &players[i], &robots[target_robot], rows, cols, target_target);
             calculScore(players, result, i);
         }
     }

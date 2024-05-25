@@ -7,7 +7,7 @@
 #define MaxPlayerInFile 10 // il y a max 10 joueurs dans le fichier;
 #define MaxPlayerInGame 4
 
-int Better_Scanf(char *message)
+int better_Scanf(char *message)
 {
     int ret_var = 0;
     int value = 1;
@@ -66,7 +66,7 @@ void calculScore(Player *players, int result, int currentPlayer)
     }
 }
 
-void PrintWinner(Player *players)
+void printWinner(Player *players)
 {
     int best_score = players[0].score;
     int num_winner = 0;
@@ -104,7 +104,7 @@ void PrintWinner(Player *players)
     }
 }
 
-int ChoiceDifficulty()
+int choiceDifficulty()
 {
     int difficulty;
     do
@@ -119,7 +119,7 @@ int ChoiceDifficulty()
     return difficulty;
 }
 
-void Num_estimated(Player *player, int target_robot, int target_target)
+void num_estimated(Player *player, int target_robot, int target_target)
 {
     do
     {
@@ -130,7 +130,7 @@ void Num_estimated(Player *player, int target_robot, int target_target)
     } while (player->nb_estimated_movement < 0);
 }
 
-void Timer(int difficulty)
+void timer(int difficulty)
 {
     int remaining_time;
 
@@ -159,7 +159,7 @@ void Timer(int difficulty)
 }
 
 // Fonction pour charger les joueurs depuis le fichier
-void LoadPlayers(Player players[], int *numPlayers)
+void loadPlayers(Player players[], int *numPlayers)
 {
     *numPlayers = 0;
     FILE *file = fopen("score.txt", "r");
@@ -176,7 +176,7 @@ void LoadPlayers(Player players[], int *numPlayers)
 }
 
 // Fonction pour sauvegarder les joueurs dans le fichier
-void SavePlayersToFile(Player players[], int numPlayers)
+void savePlayersToFile(Player players[], int numPlayers)
 {
     FILE *file = fopen("score.txt", "w");
     if (file == NULL)
@@ -192,7 +192,7 @@ void SavePlayersToFile(Player players[], int numPlayers)
 }
 
 // Fonction pour ajouter ou mettre à jour un joueur dans le tableau
-void AddOrUpdatePlayer(Player players[], int *numPlayers, Player newPlayer)
+void addOrUpdatePlayer(Player players[], int *numPlayers, Player newPlayer)
 {
     for (int i = 0; i < *numPlayers; i++)
     {
@@ -213,7 +213,7 @@ void AddOrUpdatePlayer(Player players[], int *numPlayers, Player newPlayer)
 }
 
 // Fonction pour trier les joueurs par score en ordre décroissant
-void TriPlayersScore(Player players[], int numPlayers)
+void triPlayersScore(Player players[], int numPlayers)
 {
     for (int i = 0; i < numPlayers - 1; i++)
     {
@@ -230,7 +230,7 @@ void TriPlayersScore(Player players[], int numPlayers)
 }
 
 // Fonction pour gérer les joueurs et mettre à jour le fichier
-void ManageFile(Player gamePlayers[], int numGamePlayers)
+void manageFile(Player gamePlayers[], int numGamePlayers)
 {
     Player players[MaxPlayerInFile + MaxPlayerInGame]; // Capacité pour les joueurs existants et nouveaux
     int numPlayers;
