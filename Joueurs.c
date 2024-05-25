@@ -1,6 +1,11 @@
 #include "./struct.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MaxPlayerInFile 10 // il y a max 10 joueurs dans le fichier;
+#define MaxPlayerInGame 4
 
 int Better_Scanf(char *message)
 {
@@ -17,7 +22,7 @@ int Better_Scanf(char *message)
     return value;
 }
 
-Players* CreatePlayers(Players *players)
+void createPlayers(Player *players)
 {
     do
     {
@@ -28,48 +33,75 @@ Players* CreatePlayers(Players *players)
         printf("Veuillez saisir Le nom du joueur %d : ", i + 1);
         scanf("%s", players[i].name);
         players[i].score = 0; // initialisation de tout les scores a 0
+        players[i].nb_movement = 0;
     }
-    return players;
 }
 
-void CalculScore(Players *player, int score)
+void calculScore(Player *players, int result, int currentPlayer)
 {
-    for (int i = 0; i < player->num; i++)
-    { // on fait une boucle pour les n nombre de joueurs
-        if (player->nb_estimated_movement == player->nb_movement)
+
+    switch (result)
+    {
+    case LESS_ESTIMATED:
+        players[currentPlayer].score++;
+        break;
+    case WELL_ESTIMATED:
+        players[currentPlayer].score += 2;
+        break;
+    case MORE_ESTIMATED:
+        for (int i = 0; i < players->num; i++)
         {
-            player[i].score += 2; // si le joueur a parfaitement estimé il gagne deux points
-        }
-        else if (player->nb_estimated_movement < player->nb_movement)
-        { // si le joueur a mal estimé et que il a fait moins que son estimation on lui retire un points
-            player[i].score -= 1;
-        }
-        else
-        {
-            for (int j = 0; j < player->num; j++)
+            if (i != currentPlayer)
             {
-                if (j != i)
-                {
-                    player[j].score += 1;
-                }
+                players[i].score++;
+            }
+        }
+        break;
+    case IMPOSSIBLE:
+        // a definir
+        printf("score a definir\n"); // TODO
+        break;
+    default:
+        break;
+    }
+}
+
+void PrintWinner(Player *players)
+{
+    int best_score = players[0].score;
+    int num_winner = 0;
+    bool is_ex_aequo = false;
+
+    for (int i = 1; i < players[0].num; i++)
+    {
+        if (players[i].score > best_score)
+        {
+            best_score = players[i].score;
+            num_winner = i;
+            is_ex_aequo = false;
+        }
+        else if (players[i].score == best_score)
+        {
+            is_ex_aequo = true;
+        }
+    }
+
+    if (!is_ex_aequo)
+    {
+        printf("Le gagnant de la partie est %s avec le score de %d\n",
+               players[num_winner].name, players[num_winner].score);
+    }
+    else
+    {
+        printf("Il y a égalité !\nLes joueurs ex aequo sont :\n");
+        for (int i = 0; i < players[0].num; i++)
+        {
+            if (players[i].score == best_score)
+            {
+                printf("%s avec le score de %d\n", players[i].name, players[i].score);
             }
         }
     }
-}
-
-void PrintWinner(Players *players)
-{
-    int best_score = players[0].score;
-    int winner = 0;
-    for (int i = 0; i < players->num; i++)
-    {
-        if (players[i].score > best_score)
-        { // on fait une sorte de tri afin de connaitre le meilleur score, mais aussi pour avoir le numéro du joueur au sein du tableau afin de mettre son nom et son score
-            best_score = players[i].score;
-            winner = i;
-        }
-    }
-    printf("Le gagnant de la partie est %s\n Son score est de %d points \nFélicitation a tout les joueurs !", players[winner].name, players[winner].score);
 }
 
 int ChoiceDifficulty()
@@ -87,41 +119,135 @@ int ChoiceDifficulty()
     return difficulty;
 }
 
-Players Num_estimated(Players players)
+void Num_estimated(Player *player, int target_robot, int target_target)
 {
-    players.target=rand()%19+1;
     do
     {
-        printf("En combien de coups estimez-vous atteindre la cible %d?\n", players.target);
-        scanf("%d", &players.nb_estimated_movement);
-    } while (players.nb_estimated_movement < 0);
-    return players;
+        printf("%s,vous devez atteindre la cible %d avec le robot %d?\n", player->name, target_target, target_robot);
+        player->nb_estimated_movement = Better_Scanf("Entrez le nombre de coups que vous estimez faire (remplissez 0 si la cible n'est pas possible) : \n");
+
+        player->nb_movement = 0;
+    } while (player->nb_estimated_movement < 0);
 }
 
-void Timer()
+void Timer(int difficulty)
 {
-    int difficulty = ChoiceDifficulty();
     int remaining_time;
 
     switch (difficulty)
     {
     case 1:
-        remaining_time = 10;
+        remaining_time = 15;
         break;
     case 2:
-        remaining_time = 5;
+        remaining_time = 10;
         break;
     case 3:
-        remaining_time = 3;
+        remaining_time = 1;
         break;
-    default:
-        remaining_time = 10;
     }
 
     for (int i = 1; i <= remaining_time; i++)
     {
-        printf("\r%d/%d", i, remaining_time);
         sleep(1); // Attendre une seconde
+        printf("\r%d/%d", i, remaining_time);
+        fflush(stdout);
     }
+    // system("clear"); //
+    printf("\033[H\033[2J");
     printf("\nTemps écoulé !\n");
+}
+
+// Fonction pour charger les joueurs depuis le fichier
+void LoadPlayers(Player players[], int *numPlayers)
+{
+    *numPlayers = 0;
+    FILE *file = fopen("score.txt", "r");
+    if (file == NULL)
+    {
+        printf("Le fichier ne peut pas être lu\n");
+        return;
+    }
+    while (fscanf(file, "Nom : %49s | Score : %d\n", players[*numPlayers].name, &players[*numPlayers].score) == 2 && *numPlayers < MaxPlayerInFile)
+    {
+        (*numPlayers)++;
+    }
+    fclose(file);
+}
+
+// Fonction pour sauvegarder les joueurs dans le fichier
+void SavePlayersToFile(Player players[], int numPlayers)
+{
+    FILE *file = fopen("score.txt", "w");
+    if (file == NULL)
+    {
+        printf("Erreur lors de l'ouverture du fichier\n");
+        return;
+    }
+    for (int i = 0; i < numPlayers; i++)
+    {
+        fprintf(file, "Nom : %s | Score : %d\n", players[i].name, players[i].score);
+    }
+    fclose(file);
+}
+
+// Fonction pour ajouter ou mettre à jour un joueur dans le tableau
+void AddOrUpdatePlayer(Player players[], int *numPlayers, Player newPlayer)
+{
+    for (int i = 0; i < *numPlayers; i++)
+    {
+        if (strcmp(players[i].name, newPlayer.name) == 0)
+        { // Vérifie si le nom du joueur existe déjà
+            if (newPlayer.score > players[i].score)
+            {
+                players[i].score = newPlayer.score; // Met à jour le score si le nouveau score est supérieur
+            }
+            return;
+        }
+    }
+    if (*numPlayers < MaxPlayerInFile)
+    { // Si le fichier a un nombre de joueurs inférieur a 10, alors il peut ajouter des joueurs
+        players[*numPlayers] = newPlayer;
+        (*numPlayers)++;
+    }
+}
+
+// Fonction pour trier les joueurs par score en ordre décroissant
+void TriPlayersScore(Player players[], int numPlayers)
+{
+    for (int i = 0; i < numPlayers - 1; i++)
+    {
+        for (int j = 0; j < numPlayers - i - 1; j++)
+        {
+            if (players[j].score < players[j + 1].score)
+            {
+                Player temp = players[j];
+                players[j] = players[j + 1];
+                players[j + 1] = temp; // Place le score le plus élevé en haut
+            }
+        }
+    }
+}
+
+// Fonction pour gérer les joueurs et mettre à jour le fichier
+void ManageFile(Player gamePlayers[], int numGamePlayers)
+{
+    Player players[MaxPlayerInFile + MaxPlayerInGame]; // Capacité pour les joueurs existants et nouveaux
+    int numPlayers;
+
+    LoadPlayers(players, &numPlayers); // Charge les joueurs existants depuis le fichier
+
+    for (int i = 0; i < numGamePlayers; i++)
+    {
+        AddOrUpdatePlayer(players, &numPlayers, gamePlayers[i]);
+    }
+
+    TriPlayersScore(players, numPlayers);
+
+    if (numPlayers > MaxPlayerInFile)
+    {
+        numPlayers = MaxPlayerInFile;
+    }
+
+    SavePlayersToFile(players, numPlayers);
 }
