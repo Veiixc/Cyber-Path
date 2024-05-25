@@ -7,7 +7,7 @@
 #define MaxPlayerInFile 10 // il y a max 10 joueurs dans le fichier;
 #define MaxPlayerInGame 4
 
-int better_Scanf(char *message)
+int better_scanf(char *message)
 {
     int ret_var = 0;
     int value = 1;
@@ -26,7 +26,7 @@ void createPlayers(Player *players)
 {
     do
     {
-        players->num = Better_Scanf("Veuillez saisir le nombre de joueurs (doit être supérieur à 2 et inférieur à 4) : ");
+        players->num = better_scanf("Veuillez saisir le nombre de joueurs (doit être supérieur à 2 et inférieur à 4) : ");
     } while (players->num < 2 || players->num > 4); // on a un nombre de joueur minimum de 2 joueurs
     for (int i = 0; i < players->num; i++)
     { // on fait une boucle pour demandez les noms de tout les joueurs
@@ -109,7 +109,7 @@ int choiceDifficulty()
     int difficulty;
     do
     {
-        difficulty = Better_Scanf("Entrez le niveau de difficulté : \n1. Niveau Facile\n2. Niveau Moyen\n3. Niveau Difficile\n");
+        difficulty = better_scanf("Entrez le niveau de difficulté : \n1. Niveau Facile\n2. Niveau Moyen\n3. Niveau Difficile\n");
         if (difficulty < 1 || difficulty > 3)
         {
             printf("Erreur ! Merci de bien vouloir saisir une valeur entre 1, 2 et 3 pour choisir le niveau de difficulté.\n");
@@ -124,7 +124,7 @@ void num_estimated(Player *player, int target_robot, int target_target)
     do
     {
         printf("%s,vous devez atteindre la cible %d avec le robot %d?\n", player->name, target_target, target_robot);
-        player->nb_estimated_movement = Better_Scanf("Entrez le nombre de coups que vous estimez faire (remplissez 0 si la cible n'est pas possible) : \n");
+        player->nb_estimated_movement = better_scanf("Entrez le nombre de coups que vous estimez faire (remplissez 0 si la cible n'est pas possible) : \n");
 
         player->nb_movement = 0;
     } while (player->nb_estimated_movement < 0);
@@ -235,19 +235,19 @@ void manageFile(Player gamePlayers[], int numGamePlayers)
     Player players[MaxPlayerInFile + MaxPlayerInGame]; // Capacité pour les joueurs existants et nouveaux
     int numPlayers;
 
-    LoadPlayers(players, &numPlayers); // Charge les joueurs existants depuis le fichier
+    loadPlayers(players, &numPlayers); // Charge les joueurs existants depuis le fichier
 
     for (int i = 0; i < numGamePlayers; i++)
     {
-        AddOrUpdatePlayer(players, &numPlayers, gamePlayers[i]);
+        addOrUpdatePlayer(players, &numPlayers, gamePlayers[i]);
     }
 
-    TriPlayersScore(players, numPlayers);
+    triPlayersScore(players, numPlayers);
 
     if (numPlayers > MaxPlayerInFile)
     {
         numPlayers = MaxPlayerInFile;
     }
 
-    SavePlayersToFile(players, numPlayers);
+    savePlayersToFile(players, numPlayers);
 }

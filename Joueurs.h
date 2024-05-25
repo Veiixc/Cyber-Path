@@ -3,7 +3,7 @@
 #include "./struct.h"
 
 // enlever les majuscule au debnit des methodes
-int better_Scanf(char *message);
+int better_scanf(char *message);
 void createPlayers(Player *players);
 void calculScore(Player *players, int result, int currentPlayer);
 void printWinner(Player *players);

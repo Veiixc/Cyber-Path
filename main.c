@@ -50,8 +50,8 @@ int main()
     createGrid(grid, rows, cols);
     addRobots(grid, rows, cols, robots);
 
-    int round = Better_Scanf("Entrez le nombre de manche : ");
-    int difficulty = ChoiceDifficulty();
+    int round = better_scanf("Entrez le nombre de manche : ");
+    int difficulty = choiceDifficulty();
 
     // boucle principale du jeu
     for (int actual_round = 0; actual_round < round; actual_round++)
@@ -67,7 +67,7 @@ int main()
         // estimation des mouvements pour chaque joueur
         for (int i = 0; i < players->num; i++)
         {
-            Num_estimated(&players[i], target_robot, target_target);
+            num_estimated(&players[i], target_robot, target_target);
         }
 
         // TODO commencer par le joueur avec le plus petit mouvement
@@ -78,7 +78,7 @@ int main()
             calculScore(players, result, i);
         }
     }
-    PrintWinner(players);
+    printWinner(players);
     printf("\nfin du programme");
 
     for (int i = 0; i < rows; i++)
