@@ -1,4 +1,8 @@
-Nom : ý | Score : 1037657013
-Nom : »U | Score : 17
-Nom : V | Score : 17
-Nom :  | Score : 0
+Nom : Noam | Score : 12
+Nom : Manfred | Score :10
+Nom : Player3 | Score : 10
+Nom : Manu | Score : 9
+Nom : Player2 | Score : 8
+Nom : Val | Score : 8
+Nom : Player1 | Score : 6
+Nom : Player4 | Score : 5
