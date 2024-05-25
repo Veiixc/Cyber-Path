@@ -10,10 +10,10 @@
 int main()
 {
     srand(time(NULL));
-    int rows = generateRandomNumber(15, 20);
-    int cols = generateRandomNumber(15, 20);
+    int rows = generateRandomNumber(MIN_SIZE_GRID, MAX_SIZE_GRID);
+    int cols = generateRandomNumber(MIN_SIZE_GRID, MAX_SIZE_GRID);
 
-    CASE **grid = (CASE **)malloc(rows * sizeof(CASE *));
+    Case **grid = (Case **)malloc(rows * sizeof(Case *));
     if (grid == NULL)
     {
         printf("erreur d'allocation dynamique");
@@ -21,7 +21,7 @@ int main()
     }
     for (int i = 0; i < rows; i++)
     {
-        grid[i] = (CASE *)malloc(cols * sizeof(CASE));
+        grid[i] = (Case *)malloc(cols * sizeof(Case));
 
         if (grid[i] == NULL)
         {
@@ -30,9 +30,9 @@ int main()
             exit(EXIT_FAILURE);
         }
     }
-    Players *player = NULL;
-    player = malloc(sizeof(Players) * 4);
-    if (player == NULL)
+    Player *players = NULL;
+    players = malloc(sizeof(Player) * 4);
+    if (players == NULL)
     {
         printf("Erreur d'allocation des joueurs");
         exit(EXIT_FAILURE);
@@ -46,7 +46,7 @@ int main()
         exit(EXIT_FAILURE);
     }
 
-    createPlayers(player);
+    createPlayers(players);
     createGrid(grid, rows, cols);
     addRobots(grid, rows, cols, robots);
 
@@ -65,31 +65,28 @@ int main()
         Timer(difficulty);
 
         // estimation des mouvements pour chaque joueur
-        for (int i = 0; i < player->num; i++)
+        for (int i = 0; i < players->num; i++)
         {
-            Num_estimated(&player[i], target_robot, target_target);
+            Num_estimated(&players[i], target_robot, target_target);
         }
-        // déplacement de chaque joueur
-        for (int i = 0; i < player->num; i++)
+
+        // TODO commencer par le joueur avec le plus petit mouvement
+        //  déplacement de chaque joueur
+        for (int i = 0; i < players->num; i++)
         {
-            printGrid(grid, rows, cols);
-            PlayerMovement(grid, &player[i], &robots[target_robot], rows, cols, target_target);
-            grid[robots[target_robot].actual_robot_row][robots[target_robot].actual_robot_col].state = IS_EMPTY;
-            robots[target_robot].actual_robot_row = robots[target_robot].initial_robot_row;
-            robots[target_robot].actual_robot_col = robots[target_robot].initial_robot_col;
-            grid[robots[target_robot].actual_robot_row][robots[target_robot].actual_robot_col].state = IS_ROBOT;
-            CalculScore(player);
+            int result = PlayerMovement(grid, &players[i], &robots[target_robot], rows, cols, target_target);
+            calculScore(players, result, i);
         }
     }
-    PrintWinner(player);
-    printf("fin du programme");
+    PrintWinner(players);
+    printf("\nfin du programme");
 
     for (int i = 0; i < rows; i++)
     {
         free(grid[i]);
     }
     free(grid);
-    free(player);
+    free(players);
 
     return 0;
 }

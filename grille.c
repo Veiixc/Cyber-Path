@@ -6,15 +6,18 @@
 #include "./Joueurs.h"
 #include "./deplacements.h"
 
-#define MIN_SIZE 15
-#define MAX_SIZE 20
-
+/**
+ * Generate a random number between the given min and max integer
+ */
 int generateRandomNumber(int min, int max)
 {
     return (rand() % (max - min + 1)) + min;
 }
 
-void addBorderWall(CASE **grid, int rows, int cols)
+/**
+ * This method add walls all around the grid
+ */
+void addBorderWall(Case **grid, int rows, int cols)
 {
     int col;
     for (int i = 0; i < 2; i++)
@@ -30,16 +33,19 @@ void addBorderWall(CASE **grid, int rows, int cols)
     for (int i = 0; i < 2; i++)
     {
         col = generateRandomNumber(1, rows - 2);
-        grid[rows - 1][0].wall[SOUTH] = WALL_PRESENT;
+        grid[col][0].wall[SOUTH] = WALL_PRESENT;
     }
     for (int i = 0; i < 2; i++)
     {
         col = generateRandomNumber(1, rows - 2);
-        grid[rows - 1][cols - 1].wall[SOUTH] = WALL_PRESENT;
+        grid[col][cols - 1].wall[SOUTH] = WALL_PRESENT;
     }
 }
 
-void addWall(CASE *caseGrid)
+/**
+ * This method add walls around a target
+ */
+void addWall(Case *caseGrid)
 {
     int direction = generateRandomNumber(0, 3);
     switch (direction)
@@ -66,7 +72,10 @@ void addWall(CASE *caseGrid)
     }
 }
 
-void addTargetAndWall(CASE **grid, int cols, int rows)
+/**
+ * This method add targets to grid and wall around it
+ */
+void addTargetAndWall(Case **grid, int cols, int rows)
 {
     int placedTargets = 0;
     while (placedTargets < MAX_TARGET)
@@ -87,14 +96,17 @@ void addTargetAndWall(CASE **grid, int cols, int rows)
         {
             placedTargets++;
             grid[targetRow][targetCol].state = IS_TARGET;
+            grid[targetRow][targetCol].previousState = IS_TARGET;
             grid[targetRow][targetCol].target_number = placedTargets;
             addWall(&grid[targetRow][targetCol]);
         }
     }
 }
 
-// Players *addRobots(CASE **grid, int rows, int cols, Players *player_robot)
-void addRobots(CASE **grid, int rows, int cols, Robot *robots)
+/**
+ * This method add robots to the grid
+ */
+void addRobots(Case **grid, int rows, int cols, Robot *robots)
 {
     int robotRow;
     int robotCol;
@@ -107,19 +119,24 @@ void addRobots(CASE **grid, int rows, int cols, Robot *robots)
         if (grid[robotRow][robotCol].state == IS_EMPTY)
         {
             grid[robotRow][robotCol].state = IS_ROBOT;
+            grid[robotRow][robotCol].previousState = IS_ROBOT;
+            grid[robotRow][robotCol].robot_number = i;
+
             robots[i].actual_robot_row = robotRow;
             robots[i].actual_robot_col = robotCol;
             robots[i].initial_robot_row = robotRow;
             robots[i].initial_robot_col = robotCol;
             robots[i].index = i;
 
-            grid[robotRow][robotCol].robot_number = i;
             i++;
         }
     }
 }
 
-void createGrid(CASE **grid, int rows, int cols)
+/**
+ * this method create the grid of the game
+ */
+void createGrid(Case **grid, int rows, int cols)
 {
     for (int row = 0; row < rows; row++)
     {
@@ -127,6 +144,7 @@ void createGrid(CASE **grid, int rows, int cols)
         {
 
             grid[row][col].state = IS_EMPTY;
+            grid[row][col].previousState = IS_EMPTY;
 
             if (row == 0)
             {
@@ -148,75 +166,4 @@ void createGrid(CASE **grid, int rows, int cols)
     }
     addBorderWall(grid, rows, cols);
     addTargetAndWall(grid, cols, rows);
-    // return grid;
 }
-
-// int main()
-// {
-//     srand(time(NULL));
-//     int rows = generateRandomNumber(15, 20);
-//     int cols = generateRandomNumber(15, 20);
-//     CASE **grid = (CASE **)malloc(rows * sizeof(CASE *));
-//     if (grid == NULL)
-//     {
-//         printf("erreur d'allocation dynamique");
-//         exit(EXIT_FAILURE);
-//     }
-//     for (int i = 0; i < rows; i++)
-//     {
-//         grid[i] = (CASE *)malloc(cols * sizeof(CASE));
-
-//         if (grid[i] == NULL)
-//         {
-//             printf("erreur d'allocation dynamique");
-//             // for (int j = 0; j < i; j++)
-//             // {
-//             //     free(grid[j]);
-//             // }
-
-//             free(grid);
-//             exit(EXIT_FAILURE);
-//         }
-//     }
-//     Players *player = NULL;
-//     player = malloc(sizeof(Players) * 4);
-//     if (player == NULL)
-//     {
-//         printf("Erreur d'allocation");
-//         exit(1);
-//     }
-
-//     createPlayers(player);
-//     createGrid(grid, rows, cols);
-//     for (int i = 0; i < player->num; i++)
-//     {
-//         printf("%s", player[i].name);
-//     }
-
-//     // // player = addRobots(grid, rows, cols, player);
-//     // printGrid(grid, rows, cols);
-//     // Timer();
-//     // for (int i = 0; i < player->num; i++)
-//     // {
-//     //     player[i] = Num_estimated(player[i]);
-//     //     player[i].win = PlayerMovement(grid, player[i], rows, cols);
-//     //     printGrid(grid, rows, cols);
-//     // }
-//     // for (int i = 0; i < player->num; i++)
-//     // {
-//     //     if (player[i].win == 1)
-//     //     {
-//     //         printf("Le joueur %d a gagné", i);
-//     //         break;
-//     //     }
-//     // }
-
-//     for (int i = 0; i < rows; i++)
-//     {
-//         free(grid[i]);
-//     }
-//     free(grid);
-//     free(player);
-
-//     return 0;
-// }

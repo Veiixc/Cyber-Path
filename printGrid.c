@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./struct.h"
+#include "./colors.h"
 
-void printGrid(CASE **grid, int rows, int cols)
+void printGrid(Case **grid, int rows, int cols)
 {
     printf("row : %d, cols : %d\n", rows, cols);
     for (int row = 0; row < rows; row++)

@@ -2,12 +2,13 @@
 #define JOUEURS_H
 #include "./struct.h"
 
+// enlever les majuscule au debnit des methodes
 int Better_Scanf(char *message);
-Players *createPlayers(Players *players);
-void CalculScore(Players *player);
-void PrintWinner(Players *players);
-int ChoiceDifficulty();
-void Num_estimated(Players *players, int target_robot, int target_target);
+void createPlayers(Player *players);
+void calculScore(Player *players, int result, int currentPlayer);
+void PrintWinner(Player *players);
+int choiceDifficulty();
+void Num_estimated(Player *players, int target_robot, int target_target);
 void Timer(int difficulty);
 
 #endif
