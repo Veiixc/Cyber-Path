@@ -43,7 +43,7 @@ void calculScore(Player *players, int result, int currentPlayer)
     switch (result)
     {
     case LESS_ESTIMATED:
-        players[currentPlayer].score++;
+        players[currentPlayer].score--;
         break;
     case WELL_ESTIMATED:
         players[currentPlayer].score += 2;
