@@ -95,8 +95,8 @@ int main()
 
         // Trier le tableau
         // Taille du tableau
-        // size_t size = players->num;
-        // qsort(players, size, sizeof(Player), compareItems);
+        size_t size = players->num;
+        qsort(players, size, sizeof(Player), compareItems);
         //  TODO commencer par le joueur avec le plus petit mouvement
         //   movement of each player
         // for (int i = 0; i < players->num; i++)

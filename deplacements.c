@@ -6,9 +6,10 @@ int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
 {
     char direction;
     int newRow, newCol;
+    int score = IMPOSSIBLE;
 
     if (player->nb_estimated_movement == 0)
-        return IMPOSSIBLE;
+        return score;
 
     // Show the final grid
     printGrid(grid, rows, cols);
@@ -85,23 +86,26 @@ int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
         printf("Tu as fait %d/%d déplacements\n", player->nb_movement, player->nb_estimated_movement);
     }
 
+    if (grid[robot->actual_robot_row][robot->actual_robot_col].target_number == target_target)
+    {
+        printf("dans le if");
+        if (player->nb_movement == player->nb_estimated_movement)
+            score = WELL_ESTIMATED;
+        else if (player->nb_movement < player->nb_estimated_movement)
+            score = LESS_ESTIMATED;
+        else
+            score = MORE_ESTIMATED;
+    }
+    else
+    {
+        printf("dans le else");
+        score = MORE_ESTIMATED;
+    }
     // resets the robot's position after each player.
     grid[robot->actual_robot_row][robot->actual_robot_col].state = grid[robot->actual_robot_row][robot->actual_robot_col].previousState == IS_TARGET ? IS_TARGET : IS_EMPTY;
     robot->actual_robot_row = robot->initial_robot_row;
     robot->actual_robot_col = robot->initial_robot_col;
     grid[robot->actual_robot_row][robot->actual_robot_col].state = IS_ROBOT;
 
-    if (grid[robot->actual_robot_row][robot->actual_robot_col].target_number == target_target)
-    {
-        if (player->nb_movement == player->nb_estimated_movement)
-            return WELL_ESTIMATED;
-        else if (player->nb_movement < player->nb_estimated_movement)
-            return LESS_ESTIMATED;
-        else
-            return MORE_ESTIMATED;
-    }
-    else
-    {
-        return MORE_ESTIMATED;
-    }
+    return score;
 }
