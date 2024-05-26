@@ -109,6 +109,10 @@ int main()
             // sleep(2);
             calculScore(players, result, i);
             // fflush(stdout);
+            printf("Le score de %s est actuellement de %d points\n",players[i].name,players[i].score);
+        }
+        for (int i = 0; i < players->num;i++){
+            printf("Le score de %s pour cette manche est actuellement de %d points\n",players[i].name,players[i].score);
         }
     }
     printWinner(players);
