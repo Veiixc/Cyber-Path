@@ -88,7 +88,6 @@ int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
 
     if (grid[robot->actual_robot_row][robot->actual_robot_col].target_number == target_target)
     {
-        printf("dans le if");
         if (player->nb_movement == player->nb_estimated_movement)
             score = WELL_ESTIMATED;
         else if (player->nb_movement < player->nb_estimated_movement)
@@ -98,7 +97,6 @@ int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
     }
     else
     {
-        printf("dans le else");
         score = MORE_ESTIMATED;
     }
     // resets the robot's position after each player.

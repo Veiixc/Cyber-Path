@@ -5,6 +5,6 @@ Nom : Manu | Score : 9
 Nom : Player2 | Score : 8
 Nom : Val | Score : 8
 Nom : Player1 | Score : 6
+Nom : B | Score : 6
+Nom : A | Score : 6
 Nom : Player4 | Score : 5
-Nom : B | Score : 4
-Nom : A | Score : 4
