@@ -10,11 +10,11 @@
 
 int compareItems(const void *a, const void *b)
 {
-    // Convertir les pointeurs en pointeurs vers des Item
+    // Convert pointers to pointers to Items
     Player *itemA = (Player *)a;
     Player *itemB = (Player *)b;
 
-    // Comparer les champs movement
+    // Compare fields
     if (itemA->nb_estimated_movement < itemB->nb_estimated_movement)
     {
         return -1;
