@@ -103,8 +103,8 @@ int main()
             printf("Manche %d\n\n", actual_round + 1);
             int result = playerMovement(grid, &players[i], &robots[target_robot], rows, cols, target_target);
             sleep(2);
-            calculScore(players, result, i);
             fflush(stdout);
+            calculScore(players, result, i);
             printf("Le score de %s est actuellement de %d points\n", players[i].name, players[i].score);
         }
         for (int i = 0; i < players->num; i++)
