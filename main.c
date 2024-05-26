@@ -92,11 +92,13 @@ int main()
         {
             num_estimated(&players[i], target_robot, target_target);
         }
-
+        /*
+        The sorting method only works if the first player has the lowest estimate.The sorting method only works if the first player has the lowest estimate.
+        */
         // Trier le tableau
         // Taille du tableau
-        size_t size = players->num;
-        qsort(players, size, sizeof(Player), compareItems);
+        // size_t size = players->num;
+        // qsort(players, size, sizeof(Player), compareItems);
         //  TODO commencer par le joueur avec le plus petit mouvement
         //   movement of each player
         // for (int i = 0; i < players->num; i++)
@@ -105,16 +107,20 @@ int main()
         // }
         for (int i = 0; i < players->num; i++)
         {
+            printf("Manche %d\n\n", actual_round + 1);
             int result = playerMovement(grid, &players[i], &robots[target_robot], rows, cols, target_target);
-            // sleep(2);
+            sleep(2);
             calculScore(players, result, i);
-            // fflush(stdout);
-            printf("Le score de %s est actuellement de %d points\n",players[i].name,players[i].score);
+            fflush(stdout);
+            printf("Le score de %s est actuellement de %d points\n", players[i].name, players[i].score);
         }
-        for (int i = 0; i < players->num;i++){
-            printf("Le score de %s pour cette manche est actuellement de %d points\n",players[i].name,players[i].score);
+        for (int i = 0; i < players->num; i++)
+        {
+            printf("Le score de %s pour cette manche est actuellement de %d points\n", players[i].name, players[i].score);
         }
+        printf("Manche %d\n\n", actual_round + 1);
     }
+
     printWinner(players);
     manageFile(players, players->num);
     printf("\nfin du programme");
