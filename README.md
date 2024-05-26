@@ -21,8 +21,8 @@ make
 Lors du lancement du jeu, suivez les instructions affichées à l'écran pour jouer. Si vous avez besoin d'aide pour comprendre les règles du jeu, veuillez consulter le fichier `P1_Info2_Project_CY-BER_PATH_v1.0`.
 
 ## Auteurs
-BRINGUIER Valérian
-BOUAZZAOUI Mohamed-Amine
+BRINGUIER Valérian  
+BOUAZZAOUI Mohamed-Amine  
 EDWARS Noam
 
 ## Licence
