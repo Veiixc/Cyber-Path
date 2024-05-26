@@ -142,7 +142,7 @@ void timer(int difficulty)
         remaining_time = 20;
         break;
     case 3:
-        remaining_time = 1;
+        remaining_time = 10;
         break;
     }
 
