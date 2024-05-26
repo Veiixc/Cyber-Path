@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "./struct.h"
-#include "./printgrid.h"
+#include "./printGrid.h"
 
 int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols, int target_target)
 {
@@ -10,20 +10,20 @@ int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
     if (player->nb_estimated_movement == 0)
         return IMPOSSIBLE;
 
-    // Afficher la grille finale
+    // Show the final grid
     printGrid(grid, rows, cols);
 
     while (player->nb_movement < player->nb_estimated_movement && grid[robot->actual_robot_row][robot->actual_robot_col].target_number != target_target)
     {
-        // Demander la direction du déplacement
+        // Ask for the direction of travel
         printf("%s, Quelle direction ?:\n'z'=HAUT\n's'=BAS\n'q'=GAUCHE\n'd'=DROITE\n", player->name);
         scanf(" %c", &direction);
 
-        // Initialiser les nouvelles coordonnées à celles actuelles
+        // Set the new coordinates to the current ones
         newRow = robot->actual_robot_row;
         newCol = robot->actual_robot_col;
 
-        // Déterminer la nouvelle position en fonction de la direction
+        // Determine the new position according to direction
         switch (direction)
         {
         case 'z': // Go up
@@ -52,10 +52,10 @@ int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
             break;
         default:
             printf("Mauvaise entrée\n");
-            continue; // Redemander la direction si l'entrée est invalide
+            continue; // Request direction again if entry is invalid
         }
 
-        // Suppression du robot de l'ancienne case
+        // Robot removed from old box
         /*
             if (grid[robot->actual_robot_row][robot->actual_robot_col].previousState == IS_TARGET)
             {
@@ -69,23 +69,23 @@ int playerMovement(Case **grid, Player *player, Robot *robot, int rows, int cols
         grid[robot->actual_robot_row][robot->actual_robot_col].state = grid[robot->actual_robot_row][robot->actual_robot_col].previousState == IS_TARGET ? IS_TARGET : IS_EMPTY;
         // grid[robot->actual_robot_row][robot->actual_robot_col].robot_number = -1; //FIXME
 
-        // Ajout du robot sur la nouvelle case
+        // Adding the robot to the new square
         grid[newRow][newCol].state = IS_ROBOT;
         grid[newRow][newCol].robot_number = robot->index;
 
-        // Mise à jour des coordonnées du robot
+        // Updating the robot's coordinates
         robot->actual_robot_row = newRow;
         robot->actual_robot_col = newCol;
 
-        // Afficher la grille après chaque mouvement
+        // Show the grid after each movement
         printGrid(grid, rows, cols);
 
-        // Mise à jour du nombre de mouvements effectués
+        // Updating the number of movements made
         player->nb_movement++;
         printf("Tu as fait %d/%d déplacements\n", player->nb_movement, player->nb_estimated_movement);
     }
 
-    // reinitialise la position du robot apres chaque joueur.
+    // resets the robot's position after each player.
     grid[robot->actual_robot_row][robot->actual_robot_col].state = grid[robot->actual_robot_row][robot->actual_robot_col].previousState == IS_TARGET ? IS_TARGET : IS_EMPTY;
     robot->actual_robot_row = robot->initial_robot_row;
     robot->actual_robot_col = robot->initial_robot_col;

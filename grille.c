@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "./struct.h"
-#include "./printgrid.h"
+#include "./printGrid.h"
 #include "./Joueurs.h"
 #include "./deplacements.h"
 
@@ -50,22 +50,22 @@ void addWall(Case *caseGrid)
     int direction = generateRandomNumber(0, 3);
     switch (direction)
     {
-    case 0: // mur au sud et à l'ouest
+    case 0: // wall to the south and west
         caseGrid->wall[SOUTH] = WALL_PRESENT;
         caseGrid->wall[WEST] = WALL_PRESENT;
         break;
 
-    case 1: // mur au sud et à l'est
+    case 1: // wall to the south and east
         caseGrid->wall[SOUTH] = WALL_PRESENT;
         caseGrid->wall[EAST] = WALL_PRESENT;
         break;
 
-    case 2: // mur au nord et à l'ouest
+    case 2: // wall to the north and west
         caseGrid->wall[NORTH] = WALL_PRESENT;
         caseGrid->wall[WEST] = WALL_PRESENT;
         break;
 
-    case 3: // mur au nord et à l'est
+    case 3: // wall to the north and east
         caseGrid->wall[NORTH] = WALL_PRESENT;
         caseGrid->wall[EAST] = WALL_PRESENT;
         break;
@@ -148,19 +148,19 @@ void createGrid(Case **grid, int rows, int cols)
 
             if (row == 0)
             {
-                grid[row][col].wall[NORTH] = WALL_PRESENT; // Bord supérieur
+                grid[row][col].wall[NORTH] = WALL_PRESENT; // Top edge
             }
             if (row == rows - 1)
             {
-                grid[row][col].wall[SOUTH] = WALL_PRESENT; // Bord inférieur
+                grid[row][col].wall[SOUTH] = WALL_PRESENT; // Lower edge
             }
             if (col == 0)
             {
-                grid[row][col].wall[WEST] = WALL_PRESENT; // Bord gauche
+                grid[row][col].wall[WEST] = WALL_PRESENT; // Left edge
             }
             if (col == cols - 1)
             {
-                grid[row][col].wall[EAST] = WALL_PRESENT; // Bord droit
+                grid[row][col].wall[EAST] = WALL_PRESENT; // Straight edge
             }
         }
     }

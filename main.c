@@ -2,10 +2,32 @@
 #include <stdlib.h>
 #include <time.h>
 #include "./struct.h"
-#include "./printgrid.h"
+#include "./printGrid.h"
 #include "./Joueurs.h"
 #include "./deplacements.h"
 #include "./grille.h"
+#include <unistd.h>
+
+int compareItems(const void *a, const void *b)
+{
+    // Convertir les pointeurs en pointeurs vers des Item
+    Player *itemA = (Player *)a;
+    Player *itemB = (Player *)b;
+
+    // Comparer les champs movement
+    if (itemA->nb_estimated_movement < itemB->nb_estimated_movement)
+    {
+        return -1;
+    }
+    else if (itemA->nb_estimated_movement > itemB->nb_estimated_movement)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 int main()
 {
@@ -53,7 +75,7 @@ int main()
     int round = better_scanf("Entrez le nombre de manche : ");
     int difficulty = choiceDifficulty();
 
-    // boucle principale du jeu
+    // main game loop
     for (int actual_round = 0; actual_round < round; actual_round++)
     {
         printf("Manche %d\n\n", actual_round + 1);
@@ -61,21 +83,32 @@ int main()
         int target_robot = generateRandomNumber(0, MAX_ROBOT - 1);
         int target_target = generateRandomNumber(1, MAX_TARGET);
         printGrid(grid, rows, cols);
-        printf("le robot choisi est le %d et la cible a atteindre est la %d\n", target_robot, target_target);
+        printf("La cible à atteindre est la cible %d avec le robot %d?\n", target_target, target_robot);
         timer(difficulty);
 
-        // estimation des mouvements pour chaque joueur
+        // estimated movements for each player
+        printf("Manche %d\n\n", actual_round + 1);
         for (int i = 0; i < players->num; i++)
         {
             num_estimated(&players[i], target_robot, target_target);
         }
 
-        // TODO commencer par le joueur avec le plus petit mouvement
-        //  déplacement de chaque joueur
+        // Trier le tableau
+        // Taille du tableau
+        // size_t size = players->num;
+        // qsort(players, size, sizeof(Player), compareItems);
+        //  TODO commencer par le joueur avec le plus petit mouvement
+        //   movement of each player
+        // for (int i = 0; i < players->num; i++)
+        // {
+        //     printf("\n%s : %d", players[i].name, players[i].nb_estimated_movement);
+        // }
         for (int i = 0; i < players->num; i++)
         {
             int result = playerMovement(grid, &players[i], &robots[target_robot], rows, cols, target_target);
+            // sleep(2);
             calculScore(players, result, i);
+            // fflush(stdout);
         }
     }
     printWinner(players);

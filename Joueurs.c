@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MaxPlayerInFile 10 // il y a max 10 joueurs dans le fichier;
+#define MaxPlayerInFile 10 // there is a maximum of 10 players in the file;
 #define MaxPlayerInGame 4
 
 int better_scanf(char *message)
@@ -26,13 +26,13 @@ void createPlayers(Player *players)
 {
     do
     {
-        players->num = better_scanf("Veuillez saisir le nombre de joueurs (doit être supérieur à 2 et inférieur à 4) : ");
-    } while (players->num < 2 || players->num > 4); // on a un nombre de joueur minimum de 2 joueurs
+        players->num = better_scanf("Veuillez saisir le nombre de joueurs (doit être supérieur à 1 et inférieur à 5) : ");
+    } while (players->num < 2 || players->num > 4); // we have a minimum of 2 players and a maximum of 4 players
     for (int i = 0; i < players->num; i++)
-    { // on fait une boucle pour demandez les noms de tout les joueurs
+    { // make a loop to ask for the names of all the players
         printf("Veuillez saisir Le nom du joueur %d : ", i + 1);
         scanf("%s", players[i].name);
-        players[i].score = 0; // initialisation de tout les scores a 0
+        players[i].score = 0; // set all scores to 0
         players[i].nb_movement = 0;
     }
 }
@@ -58,6 +58,7 @@ void calculScore(Player *players, int result, int currentPlayer)
         }
         break;
     case IMPOSSIBLE:
+        players[currentPlayer].score += 0;
         break;
     default:
         break;
@@ -135,10 +136,10 @@ void timer(int difficulty)
     switch (difficulty)
     {
     case 1:
-        remaining_time = 15;
+        remaining_time = 40;
         break;
     case 2:
-        remaining_time = 10;
+        remaining_time = 20;
         break;
     case 3:
         remaining_time = 1;
