@@ -23,7 +23,7 @@ Lors du lancement du jeu, suivez les instructions affichées à l'écran pour jo
 ## Auteurs
 BRINGUIER Valérian  
 BOUAZZAOUI Mohamed-Amine  
-EDWARS Noam
+EDWARDS Noam
 
 ## Licence
 Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
