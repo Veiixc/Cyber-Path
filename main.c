@@ -96,15 +96,8 @@ int main()
         The sorting method only works if the first player has the lowest estimate.The sorting method only works if the first player has the lowest estimate.
         */
         // Trier le tableau
-        // Taille du tableau
         // size_t size = players->num;
         // qsort(players, size, sizeof(Player), compareItems);
-        //  TODO commencer par le joueur avec le plus petit mouvement
-        //   movement of each player
-        // for (int i = 0; i < players->num; i++)
-        // {
-        //     printf("\n%s : %d", players[i].name, players[i].nb_estimated_movement);
-        // }
         for (int i = 0; i < players->num; i++)
         {
             printf("Manche %d\n\n", actual_round + 1);
